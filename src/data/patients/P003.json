@@ -1,0 +1,47 @@
+{
+  "patient_id": "P003",
+  "name": "Lê Thị C",
+  "age": 38,
+  "sex": "Nữ",
+  "conditions": ["Đang mang thai tuần 28"],
+  "test_date": "2026-04-08",
+  "lab_results": [
+    {
+      "test_code": "HGB",
+      "test_name": "Hemoglobin",
+      "value": 68,
+      "unit": "g/L",
+      "ref_low": 110,
+      "ref_high": 160,
+      "flag": "CRITICAL_LOW",
+      "critical_low": 70
+    },
+    {
+      "test_code": "WBC",
+      "test_name": "Bạch cầu",
+      "value": 18.5,
+      "unit": "×10⁹/L",
+      "ref_low": 4.0,
+      "ref_high": 10.0,
+      "flag": "HIGH"
+    },
+    {
+      "test_code": "PLATELET",
+      "test_name": "Tiểu cầu",
+      "value": 89,
+      "unit": "×10⁹/L",
+      "ref_low": 150,
+      "ref_high": 400,
+      "flag": "LOW"
+    },
+    {
+      "test_code": "AST",
+      "test_name": "AST",
+      "value": 245,
+      "unit": "U/L",
+      "ref_low": 0,
+      "ref_high": 40,
+      "flag": "HIGH"
+    }
+  ]
+}
