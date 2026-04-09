@@ -12,3 +12,4 @@ streamlit
 pandas
 langchain-azure-ai
 langchain-groq
+streamlit

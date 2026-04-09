@@ -69,14 +69,23 @@ def _severity_lookup(state: dict[str, Any]) -> dict[str, str]:
     return mapping
 
 
+_SEVERITY_VI = {
+    "NORMAL": "Bình thường",
+    "WATCH": "Theo dõi",
+    "SEE_DOCTOR": "Gặp bác sĩ",
+    "CRITICAL": "Khẩn cấp",
+}
+
+
 def _fallback_explanation(lab: dict[str, Any], severity: str) -> str:
     kb = get_kb_entry(lab.get("test_code", ""))
     flag = (lab.get("flag") or "NORMAL").upper()
     hint = kb["high_hint"] if "HIGH" in flag else kb["low_hint"] if "LOW" in flag else kb["meaning"]
+    sev_label = _SEVERITY_VI.get(severity, severity)
     return (
-        f"{lab.get('test_name', lab.get('test_code', 'This test'))}: "
-        f"value {lab.get('value')} {lab.get('unit', '')}. "
-        f"Severity: {severity}. {kb['meaning']} {hint} {kb['safe_next_step']}"
+        f"{lab.get('test_name', lab.get('test_code', 'Xét nghiệm này'))}: "
+        f"giá trị {lab.get('value')} {lab.get('unit', '')}. "
+        f"Mức độ: {sev_label}. {kb['meaning']} {hint} {kb['safe_next_step']}"
     )
 
 
@@ -109,7 +118,7 @@ def explain_node(state: dict[str, Any]) -> dict[str, Any]:
     """
     if state.get("is_critical"):
         return {
-            "summary": "Critical risk detected. Use emergency escalation path.",
+            "summary": "Phát hiện nguy cơ nghiêm trọng. Chuyển sang xử lý khẩn cấp.",
             "explanations": [],
             "is_critical_escalation": True,
         }
@@ -119,7 +128,7 @@ def explain_node(state: dict[str, Any]) -> dict[str, Any]:
 
     if not abnormal:
         return {
-            "summary": "All provided indicators are within normal reference ranges.",
+            "summary": "Tất cả các chỉ số đều nằm trong khoảng tham chiếu bình thường.",
             "explanations": [],
             "is_critical_escalation": False,
         }
@@ -154,5 +163,5 @@ def explain_node(state: dict[str, Any]) -> dict[str, Any]:
             }
         )
 
-    summary = f"{len(explanations)} abnormal indicator(s) need attention."
+    summary = f"{len(explanations)} chỉ số bất thường cần chú ý."
     return {"summary": summary, "explanations": explanations, "is_critical_escalation": False}

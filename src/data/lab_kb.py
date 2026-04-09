@@ -1,63 +1,63 @@
 """
-Small inline knowledge base for common lab tests in MVP scope.
+Inline knowledge base for common lab tests in MVP scope (Vietnamese).
 """
 
 from __future__ import annotations
 
 LAB_KB: dict[str, dict[str, str]] = {
     "HBA1C": {
-        "meaning": "Reflects average blood glucose in the last 2-3 months.",
-        "high_hint": "May indicate glucose control is not optimal.",
-        "low_hint": "Can happen in some uncommon situations and should be reviewed by a doctor.",
-        "safe_next_step": "Follow up with your doctor and repeat test as advised.",
+        "meaning": "Chỉ số phản ánh mức đường huyết trung bình trong 2–3 tháng qua.",
+        "high_hint": "Có thể cho thấy đường huyết chưa được kiểm soát tốt.",
+        "low_hint": "Có thể xảy ra trong một số trường hợp đặc biệt, nên tham khảo bác sĩ.",
+        "safe_next_step": "Tái khám và xét nghiệm lại theo hướng dẫn của bác sĩ.",
     },
     "GLUCOSE_F": {
-        "meaning": "Fasting blood glucose after not eating for several hours.",
-        "high_hint": "Can suggest elevated blood sugar.",
-        "low_hint": "Can indicate low blood sugar and may need urgent attention if symptomatic.",
-        "safe_next_step": "Monitor symptoms and seek medical advice.",
+        "meaning": "Đường huyết lúc đói sau khi nhịn ăn vài giờ.",
+        "high_hint": "Có thể gợi ý đường huyết đang ở mức cao.",
+        "low_hint": "Có thể là dấu hiệu đường huyết thấp, cần chú ý nếu có triệu chứng.",
+        "safe_next_step": "Theo dõi triệu chứng và tham khảo ý kiến bác sĩ.",
     },
     "LDL": {
-        "meaning": "Low-density lipoprotein cholesterol.",
-        "high_hint": "Higher values are associated with cardiovascular risk.",
-        "low_hint": "Lower values are usually acceptable in routine context.",
-        "safe_next_step": "Discuss lifestyle and risk management with your doctor.",
+        "meaning": "Cholesterol LDL (mỡ 'xấu') trong máu.",
+        "high_hint": "Giá trị cao có liên quan đến nguy cơ tim mạch.",
+        "low_hint": "Giá trị thấp thường không đáng lo ngại trong bối cảnh thông thường.",
+        "safe_next_step": "Trao đổi với bác sĩ về lối sống và quản lý nguy cơ tim mạch.",
     },
     "HGB": {
-        "meaning": "Hemoglobin level related to oxygen-carrying capacity of blood.",
-        "high_hint": "May be related to dehydration or other conditions.",
-        "low_hint": "Can indicate anemia and should be clinically evaluated.",
-        "safe_next_step": "See your doctor for context-specific assessment.",
+        "meaning": "Nồng độ huyết sắc tố liên quan đến khả năng vận chuyển oxy của máu.",
+        "high_hint": "Có thể liên quan đến mất nước hoặc một số tình trạng khác.",
+        "low_hint": "Có thể gợi ý thiếu máu, cần được đánh giá lâm sàng.",
+        "safe_next_step": "Gặp bác sĩ để đánh giá trong bối cảnh cụ thể của bạn.",
     },
     "WBC": {
-        "meaning": "White blood cell count, often related to inflammation or infection.",
-        "high_hint": "May suggest inflammation, stress response, or infection.",
-        "low_hint": "May suggest reduced immune cell count and needs review.",
-        "safe_next_step": "Correlate with symptoms and medical examination.",
+        "meaning": "Số lượng bạch cầu, thường liên quan đến viêm nhiễm hoặc nhiễm trùng.",
+        "high_hint": "Có thể gợi ý viêm, phản ứng stress hoặc nhiễm trùng.",
+        "low_hint": "Có thể gợi ý số lượng tế bào miễn dịch giảm, cần theo dõi.",
+        "safe_next_step": "Kết hợp với triệu chứng lâm sàng để đánh giá.",
     },
     "PLATELET": {
-        "meaning": "Platelet count related to blood clotting.",
-        "high_hint": "May increase clotting risk in some contexts.",
-        "low_hint": "May increase bleeding risk and needs medical review.",
-        "safe_next_step": "Consult doctor, especially if bruising/bleeding signs appear.",
+        "meaning": "Số lượng tiểu cầu liên quan đến khả năng đông máu.",
+        "high_hint": "Có thể làm tăng nguy cơ đông máu trong một số trường hợp.",
+        "low_hint": "Có thể làm tăng nguy cơ chảy máu, cần theo dõi y tế.",
+        "safe_next_step": "Tham khảo bác sĩ, đặc biệt nếu có dấu hiệu bầm tím hoặc chảy máu.",
     },
     "AST": {
-        "meaning": "Liver enzyme that can rise when liver or muscle cells are stressed.",
-        "high_hint": "May indicate liver or muscle-related stress.",
-        "low_hint": "Usually not clinically significant when isolated and low.",
-        "safe_next_step": "Review with physician along with ALT and clinical context.",
+        "meaning": "Enzyme gan có thể tăng khi tế bào gan hoặc cơ bị tổn thương.",
+        "high_hint": "Có thể gợi ý gan hoặc cơ đang chịu áp lực.",
+        "low_hint": "Thường không có ý nghĩa lâm sàng khi giá trị thấp.",
+        "safe_next_step": "Đánh giá cùng ALT và bối cảnh lâm sàng với bác sĩ.",
     },
     "ALT": {
-        "meaning": "Liver enzyme commonly used to monitor liver cell injury.",
-        "high_hint": "May suggest liver inflammation or injury.",
-        "low_hint": "Usually not clinically significant when low.",
-        "safe_next_step": "Recheck and discuss with physician.",
+        "meaning": "Enzyme gan thường dùng để theo dõi tổn thương tế bào gan.",
+        "high_hint": "Có thể gợi ý viêm hoặc tổn thương gan.",
+        "low_hint": "Thường không có ý nghĩa lâm sàng khi giá trị thấp.",
+        "safe_next_step": "Tái kiểm tra và trao đổi với bác sĩ.",
     },
     "CREATININE": {
-        "meaning": "Marker used to estimate kidney function.",
-        "high_hint": "May suggest reduced kidney filtration in some cases.",
-        "low_hint": "Often not concerning alone.",
-        "safe_next_step": "Review kidney trend and hydration status with clinician.",
+        "meaning": "Chỉ số dùng để đánh giá chức năng lọc của thận.",
+        "high_hint": "Có thể gợi ý chức năng lọc thận giảm trong một số trường hợp.",
+        "low_hint": "Thường không đáng lo ngại khi xét riêng lẻ.",
+        "safe_next_step": "Theo dõi xu hướng và tình trạng hydrat hóa cùng bác sĩ.",
     },
 }
 
@@ -67,9 +67,9 @@ def get_kb_entry(test_code: str) -> dict[str, str]:
     return LAB_KB.get(
         test_code,
         {
-            "meaning": "General lab indicator requiring clinical context.",
-            "high_hint": "High value may be clinically relevant depending on context.",
-            "low_hint": "Low value may be clinically relevant depending on context.",
-            "safe_next_step": "Discuss this result with your doctor.",
+            "meaning": "Chỉ số xét nghiệm cần được đánh giá trong bối cảnh lâm sàng cụ thể.",
+            "high_hint": "Giá trị cao có thể có ý nghĩa lâm sàng tùy trường hợp.",
+            "low_hint": "Giá trị thấp có thể có ý nghĩa lâm sàng tùy trường hợp.",
+            "safe_next_step": "Trao đổi kết quả này với bác sĩ của bạn.",
         },
     )

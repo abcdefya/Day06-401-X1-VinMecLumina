@@ -7,25 +7,25 @@ def _suggestions_for_severity(severity: str) -> list[str]:
     severity = (severity or "NORMAL").upper()
     if severity == "CRITICAL":
         return [
-            "Go to the nearest medical facility immediately.",
-            "Do not self-medicate. Bring your test report for urgent review.",
-            "Contact Vinmec support or your doctor right away.",
+            "Đến cơ sở y tế gần nhất ngay lập tức.",
+            "Không tự ý dùng thuốc. Mang theo kết quả xét nghiệm để bác sĩ xem xét khẩn cấp.",
+            "Liên hệ tổng đài Vinmec hoặc bác sĩ của bạn ngay.",
         ]
     if severity == "SEE_DOCTOR":
         return [
-            "Book a doctor appointment within 24-72 hours.",
-            "Repeat the relevant tests as instructed by your clinician.",
-            "Track symptoms and share them during the consultation.",
+            "Đặt lịch khám bác sĩ trong vòng 24–72 giờ.",
+            "Tái xét nghiệm các chỉ số liên quan theo hướng dẫn của bác sĩ.",
+            "Theo dõi triệu chứng và chia sẻ với bác sĩ khi tái khám.",
         ]
     if severity == "WATCH":
         return [
-            "Monitor your condition and keep healthy routines.",
-            "Plan follow-up testing based on doctor guidance.",
-            "Seek care sooner if new symptoms appear.",
+            "Theo dõi tình trạng sức khỏe và duy trì lối sống lành mạnh.",
+            "Lên lịch xét nghiệm theo dõi theo hướng dẫn của bác sĩ.",
+            "Đến khám sớm hơn nếu xuất hiện triệu chứng mới.",
         ]
     return [
-        "Continue regular health maintenance and periodic checkups.",
-        "Keep current lifestyle and medication plan from your doctor.",
+        "Tiếp tục duy trì sức khỏe và khám định kỳ.",
+        "Giữ lối sống hiện tại và tuân theo phác đồ điều trị của bác sĩ.",
     ]
 
 

@@ -1,170 +1,236 @@
 import streamlit as st
-import pandas as pd
-import time
-import os
-import json
 
-# ==========================================
-# 1. CẤU HÌNH TRANG & STYLING (Vinmec Theme)
-# ==========================================
+from src.data.mock_patients import get_all_patients, get_patient
+from src.data.reference_ranges import classify_severity
+from src.models import LabResult, ResultFlag
+from src.workflow import run_workflow
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Page config
+# ──────────────────────────────────────────────────────────────────────────────
 st.set_page_config(page_title="Vinmec Lumina", page_icon="🏥", layout="wide")
 
 st.markdown("""
 <style>
-    /* Tổng thể khung chat */
-    .chat-container {
-        background-color: #0b0c10;
-        color: #e0e6ed;
-        font-family: 'Inter', sans-serif;
-        padding: 20px;
-        border-radius: 10px;
+    [data-testid="stSidebar"] { background-color: #0a1628; }
+    [data-testid="stSidebar"] * { color: #e0e6ed !important; }
+    .lab-table { width: 100%; border-collapse: collapse; font-size: 0.97rem; }
+    .lab-table th {
+        background-color: #0078BE; color: white;
+        padding: 10px 14px; text-align: left;
     }
-
-    /* Cấu trúc chung cho mỗi dòng tin nhắn */
-    .message {
-        margin-bottom: 20px;
-        display: flex;
-        align-items: flex-start;
-        gap: 12px;
-        width: 100%;
+    .lab-table td { padding: 9px 14px; border-bottom: 1px solid #e8ecf1; }
+    .row-normal   { background-color: rgba(46,204,113,0.08); }
+    .row-watch    { background-color: rgba(243,156,18,0.12); }
+    .row-see-doc  { background-color: rgba(231,76,60,0.12); }
+    .row-critical { background-color: rgba(192,57,43,0.18); }
+    .badge {
+        display: inline-block; padding: 6px 18px; border-radius: 20px;
+        font-weight: 700; font-size: 1.05rem; margin-bottom: 8px;
     }
-
-    /* TIN NHẮN BOT: Căn trái */
-    .bot-message { justify-content: flex-start; }
-
-    /* TIN NHẮN USER: Căn phải */
-    .user-message { justify-content: flex-end; }
-
-    /* Avatar */
-    .message-avatar {
-        width: 40px; height: 40px; border-radius: 50%;
-        display: flex; justify-content: center; align-items: center;
-        font-size: 1.2rem; font-weight: bold; flex-shrink: 0;
-    }
-
-    .bot-avatar {
-        background: linear-gradient(135deg, #0078BE, #00c6ff);
-        color: white;
-        box-shadow: 0 4px 15px rgba(0, 120, 190, 0.4);
-    }
-
-    .user-avatar {
-        background: rgba(255,255,255,0.1);
-        color: #e0e6ed;
-        border: 1px solid rgba(255,255,255,0.05);
-    }
-
-    /* Bong bóng chat */
-    .message-content {
-        font-size: 1.05rem; line-height: 1.6;
-        padding: 12px 18px; border-radius: 18px;
-        max-width: 70%; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-
-    .bot-message .message-content {
-        background: rgba(22, 24, 29, 0.8);
-        border: 1px solid rgba(255,255,255,0.05);
-        border-top-left-radius: 4px;
-    }
-
-    .user-message .message-content {
-        background: rgba(0, 120, 190, 0.25);
-        border: 1px solid rgba(0, 163, 255, 0.3);
-        border-top-right-radius: 4px;
-        color: #ffffff;
-    }
-
-    div.stButton > button:first-child {
-        background-color: #0078BE;
-        color: white;
-        border-radius: 5px;
+    .badge-normal   { background: #d5f5e3; color: #1a7a45; }
+    .badge-watch    { background: #fef9e7; color: #b7770d; }
+    .badge-see-doc  { background: #fdecea; color: #c0392b; }
+    .badge-critical { background: #c0392b; color: white; animation: pulse 1.2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.7} }
+    div.stButton > button[kind="primary"] {
+        background-color: #0078BE; color: white;
+        border-radius: 8px; font-size: 1.1rem; padding: 0.55rem 2.5rem;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# ==========================================
-# 2. HÀM NẠP DỮ LIỆU TỪ JSON
-# ==========================================
-@st.cache_data # Dùng cache để không phải đọc file liên tục mỗi khi UI reload
-def load_patients_from_json():
-    patients = {}
-    # Đường dẫn tương đối từ file app.py
-    data_path = os.path.join("src", "data", "patients")
-    
-    if os.path.exists(data_path):
-        for filename in os.listdir(data_path):
-            if filename.endswith(".json"):
-                with open(os.path.join(data_path, filename), "r", encoding="utf-8") as f:
-                    data = json.load(f)
-                    # Lấy 'name' làm key để hiển thị trên Sidebar
-                    patients[data["name"]] = data
-    return patients
+# ──────────────────────────────────────────────────────────────────────────────
+# Constants
+# ──────────────────────────────────────────────────────────────────────────────
+SEVERITY_LABEL_VI = {
+    "NORMAL":     "BÌNH THƯỜNG",
+    "WATCH":      "THEO DÕI",
+    "SEE_DOCTOR": "GẶP BÁC SĨ",
+    "CRITICAL":   "KHẨN CẤP",
+}
+SEVERITY_ICON = {
+    "NORMAL": "🟢", "WATCH": "🟡", "SEE_DOCTOR": "🔴", "CRITICAL": "🚨",
+}
+SEVERITY_BADGE_CLASS = {
+    "NORMAL": "badge-normal", "WATCH": "badge-watch",
+    "SEE_DOCTOR": "badge-see-doc", "CRITICAL": "badge-critical",
+}
+SEVERITY_ROW_CLASS = {
+    "NORMAL": "row-normal", "WATCH": "row-watch",
+    "SEE_DOCTOR": "row-see-doc", "CRITICAL": "row-critical",
+}
+FLAG_LABEL_VI = {
+    "NORMAL":       "Bình thường",
+    "HIGH":         "Cao",
+    "LOW":          "Thấp",
+    "CRITICAL_HIGH":"Nguy kịch cao",
+    "CRITICAL_LOW": "Nguy kịch thấp",
+}
 
-MOCK_PATIENTS = load_patients_from_json()
 
-# Kiểm tra nếu không có dữ liệu
-if not MOCK_PATIENTS:
-    st.error("Không tìm thấy dữ liệu bệnh nhân trong thư mục src/data/patients/")
-    st.stop()
+# ──────────────────────────────────────────────────────────────────────────────
+# Helpers
+# ──────────────────────────────────────────────────────────────────────────────
+def _format_ref(ref_low, ref_high, unit):
+    if ref_low is not None and ref_high is not None:
+        return f"{ref_low}–{ref_high} {unit}"
+    if ref_high is not None:
+        return f"<{ref_high} {unit}"
+    if ref_low is not None:
+        return f">{ref_low} {unit}"
+    return "—"
 
-# ==========================================
-# 3. SIDEBAR & LOGIC
-# ==========================================
+
+def _lab_severity(lab) -> str:
+    """Quick severity for table colouring (before workflow runs)."""
+    try:
+        flag_enum = ResultFlag(lab.flag.value if hasattr(lab.flag, "value") else lab.flag)
+        obj = LabResult(
+            test_code=lab.test_code, test_name=lab.test_name,
+            value=float(lab.value), unit=lab.unit,
+            ref_low=lab.ref_low, ref_high=lab.ref_high, flag=flag_enum,
+        )
+        return classify_severity(obj).value
+    except Exception:
+        return "NORMAL"
+
+
+def _render_lab_table(patient):
+    rows_html = ""
+    for lab in patient.lab_results:
+        sev = _lab_severity(lab)
+        row_cls = SEVERITY_ROW_CLASS.get(sev, "row-normal")
+        icon = SEVERITY_ICON.get(sev, "🟢")
+        flag_str = lab.flag.value if hasattr(lab.flag, "value") else str(lab.flag)
+        ref_str = _format_ref(lab.ref_low, lab.ref_high, lab.unit)
+        rows_html += f"""
+        <tr class="{row_cls}">
+            <td>{icon}</td>
+            <td><b>{lab.test_name}</b></td>
+            <td>{lab.value} {lab.unit}</td>
+            <td>{ref_str}</td>
+            <td>{FLAG_LABEL_VI.get(flag_str, flag_str)}</td>
+        </tr>"""
+    st.markdown(f"""
+    <table class="lab-table">
+      <thead><tr>
+        <th></th><th>Chỉ số</th><th>Kết quả</th><th>Tham chiếu</th><th>Trạng thái</th>
+      </tr></thead>
+      <tbody>{rows_html}</tbody>
+    </table>
+    """, unsafe_allow_html=True)
+
+
+def _render_action_buttons():
+    st.divider()
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        st.link_button("📅 Đặt lịch Vinmec", "https://www.vinmec.com/vi/dat-lich-kham/")
+    with c2:
+        st.button("👍 Hữu ích", key="fb_up")
+    with c3:
+        st.button("👎 Chưa tốt", key="fb_down")
+    st.caption("⚕️ *Lưu ý: Kết quả phân tích chỉ mang tính tham khảo. Vui lòng tham khảo ý kiến bác sĩ để được tư vấn chính xác.*")
+
+
+def _render_ai_output(result: dict):
+    st.divider()
+
+    if result.get("is_critical"):
+        st.error("🚨 KHẨN CẤP — Phát hiện chỉ số nguy kịch!")
+        alert = result.get("critical_alert") or {}
+        for a in alert.get("alerts", []):
+            st.markdown(f"**{a.get('test_name', a.get('test_code'))}**: "
+                        f"{a.get('value')} {a.get('unit', '')} — {a.get('issue', '')}")
+        st.warning("⚠️ Vui lòng gặp bác sĩ hoặc đến cơ sở y tế ngay.")
+        st.markdown("### 📌 Bước tiếp theo:")
+        for i, s in enumerate(result.get("suggestions", []), 1):
+            st.markdown(f"{i}. {s}")
+        _render_action_buttons()
+        return
+
+    overall = result.get("overall_severity", "NORMAL")
+    badge_cls = SEVERITY_BADGE_CLASS.get(overall, "badge-normal")
+    icon = SEVERITY_ICON.get(overall, "🟢")
+    label = SEVERITY_LABEL_VI.get(overall, overall)
+
+    st.markdown(
+        f'<span class="badge {badge_cls}">{icon} MỨC ĐỘ TỔNG QUÁT: {label}</span>',
+        unsafe_allow_html=True,
+    )
+    summary = result.get("summary", "")
+    if summary:
+        st.markdown(f"📋 **Tóm tắt:** {summary}")
+
+    explanations = result.get("explanations") or []
+    if explanations:
+        st.markdown("### 📊 Chi tiết từng chỉ số:")
+        for exp in explanations:
+            sev = exp.get("severity", "NORMAL")
+            exp_icon = SEVERITY_ICON.get(sev, "🟢")
+            exp_label = SEVERITY_LABEL_VI.get(sev, sev)
+            header = f"{exp_icon} {exp['test_name']} — {exp['value']} {exp.get('unit','')} ({exp_label})"
+            with st.expander(header, expanded=(sev != "NORMAL")):
+                st.write(exp.get("explanation", ""))
+    else:
+        st.info("Tất cả các chỉ số nằm trong giới hạn bình thường. Không có gì đặc biệt cần giải thích.")
+
+    suggestions = result.get("suggestions") or []
+    if suggestions:
+        st.markdown("### 📌 Bước tiếp theo:")
+        for i, s in enumerate(suggestions, 1):
+            st.markdown(f"{i}. {s}")
+
+    _render_action_buttons()
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Sidebar — Screen 1: Patient selector
+# ──────────────────────────────────────────────────────────────────────────────
 st.sidebar.title("🏥 Vinmec Lumina")
 st.sidebar.caption("Trợ lý giải thích kết quả xét nghiệm")
 st.sidebar.divider()
 
-selected_name = st.sidebar.radio("Danh sách bệnh nhân", options=list(MOCK_PATIENTS.keys()))
-patient = MOCK_PATIENTS[selected_name]
+@st.cache_data
+def _patient_options():
+    patients = get_all_patients()
+    return {f"{p.name} ({p.patient_id})": p.patient_id for p in patients}
 
-if "chat_history" not in st.session_state:
-    st.session_state.chat_history = []
+options = _patient_options()
+selected_label = st.sidebar.radio("Chọn bệnh nhân:", list(options.keys()))
+patient_id = options[selected_label]
 
-# Reset chat khi đổi bệnh nhân
-if "last_patient" not in st.session_state or st.session_state.last_patient != selected_name:
-    st.session_state.chat_history = []
-    st.session_state.last_patient = selected_name
-    st.session_state.chat_history.append({
-        "role": "bot",
-        "content": f"Xin chào! Tôi là Vinmec Lumina. Bạn vừa chọn bệnh án của <b>{selected_name}</b> ({patient['age']} tuổi, {patient['sex']}). Tiền sử: {', '.join(patient['conditions'])}. Tôi có thể giúp gì cho bạn?"
-    })
+# Reset AI result when patient changes
+if st.session_state.get("selected_patient_id") != patient_id:
+    st.session_state.selected_patient_id = patient_id
+    st.session_state.workflow_result = None
 
-# ==========================================
-# 4. HIỂN THỊ NỘI DUNG CHAT
-# ==========================================
-st.markdown('<div class="chat-container">', unsafe_allow_html=True)
+st.sidebar.divider()
+st.sidebar.info("🤖 AI hiểu dữ liệu — Bác sĩ hiểu bệnh nhân.")
 
-for message in st.session_state.chat_history:
-    if message["role"] == "bot":
-        st.markdown(f"""
-        <div class="message bot-message">
-            <div class="message-avatar bot-avatar">L</div>
-            <div class="message-content">{message["content"]}</div>
-        </div>
-        """, unsafe_allow_html=True)
-    else:
-        st.markdown(f"""
-        <div class="message user-message">
-            <div class="message-content">{message["content"]}</div>
-            <div class="message-avatar user-avatar">👤</div>
-        </div>
-        """, unsafe_allow_html=True)
+# ──────────────────────────────────────────────────────────────────────────────
+# Main area — Screen 2: Patient card + lab table
+# ──────────────────────────────────────────────────────────────────────────────
+patient = get_patient(patient_id)
 
-st.markdown('</div>', unsafe_allow_html=True)
+st.markdown(f"### 👤 {patient.name} &nbsp;|&nbsp; {patient.age} tuổi &nbsp;|&nbsp; {patient.sex}")
+st.markdown(f"**Tiền sử:** {', '.join(patient.conditions)} &nbsp;&nbsp; **Ngày xét nghiệm:** {patient.test_date}")
 
-# ==========================================
-# 5. INPUT VÀ XỬ LÝ CÂU HỎI
-# ==========================================
-user_input = st.chat_input("Nhập câu hỏi của bạn tại đây...")
+st.markdown("#### Kết quả xét nghiệm")
+_render_lab_table(patient)
 
-if user_input:
-    st.session_state.chat_history.append({"role": "user", "content": user_input})
-    
-    with st.spinner("Đang phân tích..."):
-        time.sleep(0.8)
-    
-    # Ở đây bạn có thể thêm logic xử lý dựa trên dữ liệu 'lab_results' có trong file JSON
-    bot_reply = f"Tôi đã nhận được câu hỏi về bệnh nhân {selected_name}. Hệ thống đang phân tích {len(patient['lab_results'])} chỉ số xét nghiệm..."
-    st.session_state.chat_history.append({"role": "bot", "content": bot_reply})
-    
-    st.rerun()
+st.markdown("")
+_, mid, _ = st.columns([1, 2, 1])
+with mid:
+    analyze = st.button("🤖 Giải thích với AI", use_container_width=True, type="primary")
+
+if analyze:
+    with st.spinner("Lumina đang phân tích..."):
+        st.session_state.workflow_result = run_workflow(patient_id=patient_id)
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Main area — Screen 3: AI output panel
+# ──────────────────────────────────────────────────────────────────────────────
+if st.session_state.get("workflow_result"):
+    _render_ai_output(st.session_state.workflow_result)

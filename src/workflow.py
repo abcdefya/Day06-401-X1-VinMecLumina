@@ -67,11 +67,12 @@ def _fill_critical_defaults(state: AgentState) -> AgentState:
     if not state.get("is_critical"):
         return state
     if not state.get("summary"):
-        state["summary"] = "Critical value detected. Immediate medical care is recommended."
+        state["summary"] = "Phát hiện chỉ số nguy kịch. Cần chăm sóc y tế ngay lập tức."
     if "suggestions" not in state:
         state["suggestions"] = [
-            "Go to the nearest medical facility immediately.",
-            "Do not self-medicate without professional guidance.",
+            "Đến cơ sở y tế gần nhất ngay lập tức.",
+            "Không tự ý dùng thuốc. Mang theo kết quả xét nghiệm để bác sĩ xem xét khẩn cấp.",
+            "Liên hệ tổng đài Vinmec hoặc bác sĩ của bạn ngay.",
         ]
     if "explanations" not in state:
         state["explanations"] = []
