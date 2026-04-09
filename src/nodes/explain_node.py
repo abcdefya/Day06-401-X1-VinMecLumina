@@ -35,8 +35,22 @@ def _load_system_prompt() -> str:
     )
 
 
-def _build_llm():
-    # Lazy import so local demo still works without model credentials.
+def _build_llm(provider: str = "azure"):
+    """
+    Build LLM client for the specified provider.
+    Supported: 'azure' or 'groq'
+    """
+    if provider.lower() == "groq":
+        api_key = os.getenv("GROQ_API_KEY")
+        if not api_key:
+            return None
+        try:
+            from langchain_groq import ChatGroq
+        except Exception:
+            return None
+        return ChatGroq(api_key=api_key, model="mixtral-8x7b-32768")
+    
+    # Default to Azure
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
         return None
@@ -135,7 +149,8 @@ def explain_node(state: dict[str, Any]) -> dict[str, Any]:
 
     severity_map = _severity_lookup(state)
     system_prompt = _load_system_prompt()
-    llm = _build_llm()
+    provider = state.get("llm_provider", "azure")
+    llm = _build_llm(provider=provider)
 
     explanations: list[dict[str, Any]] = []
     for lab in abnormal:
