@@ -19,4 +19,6 @@ class AgentState(TypedDict, total=False):
     per_test_severity: list[dict[str, Any]]
     explanations: list[dict[str, Any]] | str
     suggestions: list[str]
+    summary: str
+    is_critical_escalation: bool
     errors: list[str]
