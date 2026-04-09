@@ -1,10 +1,13 @@
 import os
 import time
 from dotenv import load_dotenv
+from langchain_azure_ai.chat_models import AzureAIOpenAIApiChatModel
 from langchain_groq import ChatGroq  # Thay đổi ở đây
 from langchain_core.messages import SystemMessage
 from langgraph.graph import StateGraph, START
 from langgraph.prebuilt import ToolNode, tools_condition
+import tools  # Import danh sách tools từ module tools.py
+
 
 from src.state import AgentState
 
@@ -16,12 +19,11 @@ load_dotenv()
 
 tools_list = [tools]
 
-llm = ChatGroq(
-    temperature=0,
-    model_name="llama-3.3-70b-versatile",
-    groq_api_key=os.getenv("GROQ_API_KEY")
+llm = AzureAIOpenAIApiChatModel(
+    endpoint="https://models.inference.ai.azure.com",
+    credential=os.getenv("OPENAI_API_KEY"),
+    model="gpt-4o"   # or deployed model
 )
-
 llm_with_tools = llm.bind_tools(tools_list)
 
 
