@@ -1,6 +1,6 @@
 import time
 from typing import Dict, Any, List
-from src.seishin_ai.core.logger import logger
+from src.core.logger import logger
 
 class PerformanceTracker:
     """

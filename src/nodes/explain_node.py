@@ -1,380 +1,158 @@
-﻿"""Explain node for Vinmec Lumina."""
-
 from __future__ import annotations
 
-import json
+import os
 import re
-from dataclasses import dataclass
-from typing import Any, Callable
+from pathlib import Path
+from typing import Any
 
-from src.nodes.lab_kb import (
-    DEFAULT_DISCLAIMER,
-    SAFE_STYLE_GUIDE,
-    canonicalize_test_code,
-    load_system_prompt,
-    normalize_patient_data,
-    summarize_tests_for_prompt,
-)
+from dotenv import load_dotenv
+from langchain_core.messages import HumanMessage, SystemMessage
 
-LLMCallable = Callable[[str, str], str]
-ALLOWED_CONFIDENCE = {"high", "medium", "low"}
-ALLOWED_SEVERITY = {"NORMAL", "WATCH", "SEE_DOCTOR", "CRITICAL"}
-SEVERITY_ORDER = {
-    "NORMAL": 0,
-    "WATCH": 1,
-    "SEE_DOCTOR": 2,
-    "CRITICAL": 3,
-}
-FALLBACK_SYSTEM_PROMPT = (
-    "Ban la Lumina, tro ly giai thich ket qua xet nghiem cho benh nhan Vinmec. "
-    "Chi su dung du lieu co trong state. Khong chan doan benh, khong ke thuoc, "
-    "khong dua ra khang dinh tuyet doi. Luon tra ve duy nhat mot JSON hop le."
-)
+from src.data.lab_kb import get_kb_entry
+
+load_dotenv()
+
+_BANNED_PATTERNS = [
+    r"\bdiagnos(?:e|is)\b",
+    r"\bprescrib(?:e|ed|ing)\b",
+    r"\bke don\b",
+    r"\bchan doan\b",
+    r"\bdung thuoc\b",
+]
 
 
-@dataclass
-class ExplainNodeConfig:
-    max_explanations: int = 4
-    language: str = "vi"
-    include_normal_when_all_normal: bool = True
-
-
-def _safe_json_dumps(data: dict[str, Any]) -> str:
-    return json.dumps(data, ensure_ascii=False, indent=2)
-
-
-def _coerce_mapping(value: Any) -> dict[str, Any]:
-    if isinstance(value, dict):
-        return value
-
-    model_dump = getattr(value, "model_dump", None)
-    if callable(model_dump):
-        dumped = model_dump()
-        return dumped if isinstance(dumped, dict) else {}
-
-    dict_fn = getattr(value, "dict", None)
-    if callable(dict_fn):
-        dumped = dict_fn()
-        return dumped if isinstance(dumped, dict) else {}
-
-    return {}
-
-
-def _coerce_result_list(value: Any) -> list[dict[str, Any]]:
-    if not isinstance(value, list):
-        return []
-    results: list[dict[str, Any]] = []
-    for item in value:
-        mapped = _coerce_mapping(item)
-        if mapped:
-            results.append(mapped)
-    return results
-
-
-def _normalize_state(state: dict[str, Any]) -> dict[str, Any]:
-    base = (
-        _coerce_mapping(state.get("patient_profile"))
-        or _coerce_mapping(state.get("patient"))
-        or _coerce_mapping(state.get("patient_data"))
-        or _coerce_mapping(state.get("input"))
-    )
-    raw_results = _coerce_result_list(state.get("lab_results")) or _coerce_result_list(base.get("lab_results"))
-    normalized = normalize_patient_data({**base, "lab_results": raw_results})
-    return {
-        "patient_profile": {
-            "patient_id": normalized.get("patient_id", ""),
-            "name": normalized.get("name", ""),
-            "age": normalized.get("age"),
-            "sex": normalized.get("sex", ""),
-            "conditions": normalized.get("conditions", []),
-            "test_date": normalized.get("test_date", "2026-04-08"),
-        },
-        "lab_results": normalized.get("lab_results", []),
-    }
-
-
-def _severity_map_from_state(state: dict[str, Any]) -> dict[str, str]:
-    result: dict[str, str] = {}
-    for item in state.get("per_test_severity") or []:
-        entry = _coerce_mapping(item)
-        test_code = canonicalize_test_code(entry.get("test_code"), entry.get("test_name"))
-        severity = str(entry.get("severity") or entry.get("level") or "").strip().upper()
-        if test_code and severity in ALLOWED_SEVERITY:
-            result[test_code] = severity
-    return result
-
-
-def _derive_severity(result: dict[str, Any], overall_severity: str, severity_map: dict[str, str]) -> str:
-    test_code = result.get("test_code", "")
-    if test_code in severity_map:
-        return severity_map[test_code]
-
-    flag = str(result.get("flag", "NORMAL")).upper()
-    if flag in {"CRITICAL_LOW", "CRITICAL_HIGH"}:
-        return "CRITICAL"
-    if flag in {"HIGH", "LOW"}:
-        if overall_severity in {"SEE_DOCTOR", "CRITICAL"}:
-            return "SEE_DOCTOR"
-        return "WATCH"
-    return "NORMAL"
-
-
-def _compute_overall_severity(lab_results: list[dict[str, Any]], state: dict[str, Any], severity_map: dict[str, str]) -> str:
-    explicit = str(state.get("overall_severity") or "").strip().upper()
-    if explicit in ALLOWED_SEVERITY:
-        return explicit
-
-    worst = "NORMAL"
-    for item in lab_results:
-        severity = _derive_severity(item, explicit, severity_map)
-        if SEVERITY_ORDER[severity] > SEVERITY_ORDER[worst]:
-            worst = severity
-    return worst
-
-
-def _select_focus_results(
-    lab_results: list[dict[str, Any]],
-    overall_severity: str,
-    severity_map: dict[str, str],
-    config: ExplainNodeConfig,
-) -> list[dict[str, Any]]:
-    ranked = sorted(
-        lab_results,
-        key=lambda item: (
-            -SEVERITY_ORDER[_derive_severity(item, overall_severity, severity_map)],
-            item.get("test_code", ""),
-        ),
-    )
-    abnormal = [item for item in ranked if str(item.get("flag", "NORMAL")).upper() != "NORMAL"]
-    if abnormal:
-        return abnormal[: config.max_explanations]
-    if config.include_normal_when_all_normal:
-        return ranked[:1]
-    return []
-
-
-def build_explain_user_prompt(state: dict[str, Any], config: ExplainNodeConfig | None = None) -> str:
-    cfg = config or ExplainNodeConfig()
-    normalized = _normalize_state(state)
-    patient_profile = normalized["patient_profile"]
-    lab_results = normalized["lab_results"]
-    severity_map = _severity_map_from_state(state)
-    overall_severity = _compute_overall_severity(lab_results, state, severity_map)
-    focus_results = _select_focus_results(lab_results, overall_severity, severity_map, cfg)
-
-    payload = {
-        "node_name": "explain_node",
-        "patient_profile": patient_profile,
-        "lab_results": lab_results,
-        "focus_results": focus_results,
-        "overall_severity": overall_severity,
-        "per_test_severity": [
-            {
-                "test_code": item["test_code"],
-                "severity": _derive_severity(item, overall_severity, severity_map),
-            }
-            for item in focus_results
-        ],
-        "lab_kb_context": summarize_tests_for_prompt(focus_results or lab_results),
-        "style_rules": {
-            "must_do": SAFE_STYLE_GUIDE["must_do"],
-            "must_not_do": SAFE_STYLE_GUIDE["must_not_do"],
-            "preferred_phrases": SAFE_STYLE_GUIDE["preferred_phrases"],
-            "banned_phrases": SAFE_STYLE_GUIDE["banned_phrases"],
-            "max_explanations": cfg.max_explanations,
-        },
-        "default_disclaimer": DEFAULT_DISCLAIMER,
-        "instruction": (
-            "Return JSON only with schema: "
-            "{patient_id, overall_severity, summary, explanations[], confidence, disclaimer}. "
-            "Each explanation item must contain test_code and explanation."
-        ),
-    }
-    return _safe_json_dumps(payload)
-
-
-def _extract_first_json_block(text: str) -> str:
-    stripped = text.strip()
-    if stripped.startswith("{") and stripped.endswith("}"):
-        return stripped
-    match = re.search(r"\{.*\}", stripped, re.DOTALL)
-    if not match:
-        raise ValueError("LLM output does not contain a JSON object.")
-    return match.group(0)
-
-
-def _default_explanation_text(patient_profile: dict[str, Any], result: dict[str, Any], severity: str) -> str:
-    value = result.get("value")
-    unit = result.get("unit", "")
-    ref_low = result.get("ref_low")
-    ref_high = result.get("ref_high")
-    condition_text = ", ".join(patient_profile.get("conditions", [])) or "boi canh suc khoe hien tai"
-    if severity == "CRITICAL":
-        return (
-            f"{result['test_name']} dang o muc rat dang chu y ({value} {unit}). "
-            f"Chi so nay can duoc danh gia som cung bac si, nhat la trong boi canh {condition_text}."
-        )
-    if str(result.get("flag", "")).upper() == "HIGH":
-        return (
-            f"{result['test_name']} dang cao hon khoang tham chieu ({value} {unit}; "
-            f"tham chieu {ref_low}-{ref_high} {unit}). Ket qua nay nen duoc doc cung boi canh {condition_text}."
-        )
-    if str(result.get("flag", "")).upper() in {"LOW", "CRITICAL_LOW"}:
-        return (
-            f"{result['test_name']} dang thap hon khoang tham chieu ({value} {unit}; "
-            f"tham chieu {ref_low}-{ref_high} {unit}). Nen doi chieu them voi trieu chung va danh gia cua bac si."
-        )
+def _load_system_prompt() -> str:
+    prompt_path = Path(__file__).resolve().parent.parent / "agents" / "system_prompt.md"
+    try:
+        prompt = prompt_path.read_text(encoding="utf-8").strip()
+        if prompt:
+            return prompt
+    except FileNotFoundError:
+        pass
     return (
-        f"{result['test_name']} hien trong gioi han tham chieu ({value} {unit}). "
-        f"Day la mot dau hieu tuong doi on dinh trong boi canh hien tai."
+        "You are Vinmec Lumina. Explain lab results in simple language. "
+        "Do not diagnose and do not prescribe medications."
     )
 
 
-def _materialize_explanations(
-    patient_profile: dict[str, Any],
-    focus_results: list[dict[str, Any]],
-    parsed_items: list[dict[str, str]],
-    overall_severity: str,
-    severity_map: dict[str, str],
-) -> list[dict[str, Any]]:
-    parsed_by_code = {
-        canonicalize_test_code(item.get("test_code"), item.get("test_name")): item
-        for item in parsed_items
-        if canonicalize_test_code(item.get("test_code"), item.get("test_name")) != "UNKNOWN"
-    }
+def _build_llm():
+    # Lazy import so local demo still works without model credentials.
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        return None
+    try:
+        from langchain_azure_ai.chat_models import AzureAIOpenAIApiChatModel
+    except Exception:
+        return None
+    return AzureAIOpenAIApiChatModel(
+        endpoint="https://models.inference.ai.azure.com",
+        credential=api_key,
+        model="gpt-4o",
+    )
+
+
+def _sanitize_text(text: str) -> str:
+    if not text:
+        return text
+    sanitized = text
+    for pattern in _BANNED_PATTERNS:
+        sanitized = re.sub(pattern, "medical assessment", sanitized, flags=re.IGNORECASE)
+    return sanitized.strip()
+
+
+def _severity_lookup(state: dict[str, Any]) -> dict[str, str]:
+    mapping: dict[str, str] = {}
+    for item in state.get("per_test_severity", []) or []:
+        test_code = item.get("test_code")
+        if test_code:
+            mapping[test_code] = item.get("severity", "NORMAL")
+    return mapping
+
+
+def _fallback_explanation(lab: dict[str, Any], severity: str) -> str:
+    kb = get_kb_entry(lab.get("test_code", ""))
+    flag = (lab.get("flag") or "NORMAL").upper()
+    hint = kb["high_hint"] if "HIGH" in flag else kb["low_hint"] if "LOW" in flag else kb["meaning"]
+    return (
+        f"{lab.get('test_name', lab.get('test_code', 'This test'))}: "
+        f"value {lab.get('value')} {lab.get('unit', '')}. "
+        f"Severity: {severity}. {kb['meaning']} {hint} {kb['safe_next_step']}"
+    )
+
+
+def _llm_explanation(llm, system_prompt: str, patient_profile: dict[str, Any], lab: dict[str, Any], severity: str) -> str:
+    kb = get_kb_entry(lab.get("test_code", ""))
+    human_prompt = (
+        "Explain this abnormal lab result in plain Vietnamese for non-medical adults.\n"
+        "Keep to 2-4 short sentences. Avoid diagnosis and medication advice.\n"
+        f"Patient: age={patient_profile.get('age')}, sex={patient_profile.get('sex')}, "
+        f"conditions={patient_profile.get('conditions', [])}\n"
+        f"Test: code={lab.get('test_code')}, name={lab.get('test_name')}, value={lab.get('value')}, "
+        f"unit={lab.get('unit')}, ref_low={lab.get('ref_low')}, ref_high={lab.get('ref_high')}, "
+        f"flag={lab.get('flag')}, severity={severity}\n"
+        f"Knowledge: meaning={kb['meaning']}; high_hint={kb['high_hint']}; "
+        f"low_hint={kb['low_hint']}; next_step={kb['safe_next_step']}"
+    )
+    response = llm.invoke(
+        [
+            SystemMessage(content=system_prompt),
+            HumanMessage(content=human_prompt),
+        ]
+    )
+    return str(getattr(response, "content", "") or "").strip()
+
+
+def explain_node(state: dict[str, Any]) -> dict[str, Any]:
+    """
+    Create per-test explanations for abnormal indicators.
+    Falls back to deterministic explanations when model access is unavailable.
+    """
+    if state.get("is_critical"):
+        return {
+            "summary": "Critical risk detected. Use emergency escalation path.",
+            "explanations": [],
+            "is_critical_escalation": True,
+        }
+
+    lab_results = state.get("lab_results", []) or []
+    abnormal = [item for item in lab_results if (item.get("flag") or "NORMAL") != "NORMAL"]
+
+    if not abnormal:
+        return {
+            "summary": "All provided indicators are within normal reference ranges.",
+            "explanations": [],
+            "is_critical_escalation": False,
+        }
+
+    severity_map = _severity_lookup(state)
+    system_prompt = _load_system_prompt()
+    llm = _build_llm()
 
     explanations: list[dict[str, Any]] = []
-    for result in focus_results:
-        test_code = result["test_code"]
-        parsed_item = parsed_by_code.get(test_code, {})
-        severity = _derive_severity(result, overall_severity, severity_map)
-        explanation_text = str(parsed_item.get("explanation", "")).strip() or _default_explanation_text(
-            patient_profile,
-            result,
-            severity,
-        )
+    for lab in abnormal:
+        code = lab.get("test_code", "")
+        severity = severity_map.get(code, "WATCH")
+        text = _fallback_explanation(lab, severity)
+
+        if llm is not None:
+            try:
+                llm_text = _llm_explanation(llm, system_prompt, state.get("patient_profile", {}), lab, severity)
+                if len(llm_text.split()) >= 12:
+                    text = llm_text
+            except Exception:
+                # Keep deterministic fallback when LLM request fails.
+                pass
+
         explanations.append(
             {
-                "test_code": test_code,
-                "test_name": result["test_name"],
-                "value": result["value"],
-                "unit": result["unit"],
+                "test_code": code,
+                "test_name": lab.get("test_name", code),
+                "value": lab.get("value"),
+                "unit": lab.get("unit", ""),
                 "severity": severity,
-                "explanation": explanation_text,
-            }
-        )
-    return explanations
-
-
-def parse_explain_response(
-    raw_text: str,
-    patient_profile: dict[str, Any],
-    focus_results: list[dict[str, Any]],
-    overall_severity: str,
-    severity_map: dict[str, str],
-) -> dict[str, Any]:
-    data = json.loads(_extract_first_json_block(raw_text))
-    confidence = str(data.get("confidence", "medium")).strip().lower()
-
-    parsed_items: list[dict[str, str]] = []
-    for item in data.get("explanations", []):
-        entry = _coerce_mapping(item)
-        parsed_items.append(
-            {
-                "test_code": str(entry.get("test_code", "")).strip(),
-                "test_name": str(entry.get("test_name", "")).strip(),
-                "explanation": str(entry.get("explanation", "")).strip(),
+                "explanation": _sanitize_text(text),
             }
         )
 
-    explanations = _materialize_explanations(
-        patient_profile,
-        focus_results,
-        parsed_items,
-        overall_severity,
-        severity_map,
-    )
-    return {
-        "patient_id": str(data.get("patient_id") or patient_profile.get("patient_id") or ""),
-        "overall_severity": overall_severity,
-        "summary": str(data.get("summary", "")).strip(),
-        "explanations": explanations,
-        "confidence": confidence if confidence in ALLOWED_CONFIDENCE else "medium",
-        "disclaimer": str(data.get("disclaimer", DEFAULT_DISCLAIMER)).strip() or DEFAULT_DISCLAIMER,
-    }
-
-
-def fallback_explain_response(state: dict[str, Any], config: ExplainNodeConfig | None = None) -> dict[str, Any]:
-    cfg = config or ExplainNodeConfig()
-    normalized = _normalize_state(state)
-    patient_profile = normalized["patient_profile"]
-    lab_results = normalized["lab_results"]
-    severity_map = _severity_map_from_state(state)
-    overall_severity = _compute_overall_severity(lab_results, state, severity_map)
-    focus_results = _select_focus_results(lab_results, overall_severity, severity_map, cfg)
-
-    explanations = _materialize_explanations(
-        patient_profile,
-        focus_results,
-        [],
-        overall_severity,
-        severity_map,
-    )
-
-    if not lab_results:
-        summary = "Chua co du lieu xet nghiem hop le de giai thich."
-    elif not focus_results:
-        summary = "Chua co chi so nao can giai thich them."
-    elif overall_severity == "NORMAL":
-        summary = f"Ket qua hien tai cua {patient_profile['name']} chu yeu nam trong gioi han tham chieu."
-    else:
-        test_names = ", ".join(item["test_name"] for item in focus_results)
-        summary = f"Ghi nhan {len(focus_results)} chi so can luu y: {test_names}."
-
-    return {
-        "patient_id": patient_profile.get("patient_id", ""),
-        "overall_severity": overall_severity,
-        "summary": summary,
-        "explanations": explanations,
-        "confidence": "low",
-        "disclaimer": DEFAULT_DISCLAIMER,
-    }
-
-
-def explain_node(
-    state: dict[str, Any],
-    llm: LLMCallable | None = None,
-    config: ExplainNodeConfig | None = None,
-) -> dict[str, Any]:
-    cfg = config or ExplainNodeConfig()
-    normalized = _normalize_state(state)
-    patient_profile = normalized["patient_profile"]
-    lab_results = normalized["lab_results"]
-    severity_map = _severity_map_from_state(state)
-    overall_severity = _compute_overall_severity(lab_results, state, severity_map)
-    focus_results = _select_focus_results(lab_results, overall_severity, severity_map, cfg)
-    prompt = build_explain_user_prompt({**state, **normalized}, config=cfg)
-    system_prompt = load_system_prompt("explain_node", FALLBACK_SYSTEM_PROMPT)
-
-    if llm is None:
-        result = fallback_explain_response({**state, **normalized}, config=cfg)
-        raw_text = _safe_json_dumps(result)
-    else:
-        raw_text = llm(system_prompt, prompt)
-        try:
-            result = parse_explain_response(raw_text, patient_profile, focus_results, overall_severity, severity_map)
-            if not result["summary"]:
-                result["summary"] = fallback_explain_response({**state, **normalized}, config=cfg)["summary"]
-        except Exception:
-            result = fallback_explain_response({**state, **normalized}, config=cfg)
-
-    return {
-        **state,
-        "patient_profile": patient_profile,
-        "lab_results": lab_results,
-        "overall_severity": result["overall_severity"],
-        "explain_prompt": prompt,
-        "explain_raw": raw_text,
-        "explain_output": result,
-        "explanations": result["explanations"],
-    }
+    summary = f"{len(explanations)} abnormal indicator(s) need attention."
+    return {"summary": summary, "explanations": explanations, "is_critical_escalation": False}
