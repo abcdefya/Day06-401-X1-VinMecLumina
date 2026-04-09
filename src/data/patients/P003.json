@@ -1,8 +1,8 @@
 {
   "patient_id": "P003",
-  "name": "Đỗ Thế Anh",
+  "name": "Phạm Băng Băng",
   "age": 38,
-  "sex": "Nam",
+  "sex": "Nữ",
   "conditions": ["Đang mang thai tuần 28"],
   "test_date": "2026-04-08",
   "lab_results": [
