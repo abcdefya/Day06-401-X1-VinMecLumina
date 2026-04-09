@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 import time
+import os
+import json
 
 # ==========================================
 # 1. CẤU HÌNH TRANG & STYLING (Vinmec Theme)
@@ -27,27 +29,17 @@ st.markdown("""
         width: 100%;
     }
 
-    /* TIN NHẮN BOT: Căn trái (Mặc định) */
-    .bot-message {
-        justify-content: flex-start;
-    }
+    /* TIN NHẮN BOT: Căn trái */
+    .bot-message { justify-content: flex-start; }
 
     /* TIN NHẮN USER: Căn phải */
-    .user-message {
-        justify-content: flex-end;
-    }
+    .user-message { justify-content: flex-end; }
 
     /* Avatar */
     .message-avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 1.2rem;
-        font-weight: bold;
-        flex-shrink: 0;
+        width: 40px; height: 40px; border-radius: 50%;
+        display: flex; justify-content: center; align-items: center;
+        font-size: 1.2rem; font-weight: bold; flex-shrink: 0;
     }
 
     .bot-avatar {
@@ -64,28 +56,24 @@ st.markdown("""
 
     /* Bong bóng chat */
     .message-content {
-        font-size: 1.05rem;
-        line-height: 1.6;
-        padding: 12px 18px;
-        border-radius: 18px;
-        max-width: 70%;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        font-size: 1.05rem; line-height: 1.6;
+        padding: 12px 18px; border-radius: 18px;
+        max-width: 70%; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
 
     .bot-message .message-content {
         background: rgba(22, 24, 29, 0.8);
         border: 1px solid rgba(255,255,255,0.05);
-        border-top-left-radius: 4px; /* Bo góc đặc trưng bên trái */
+        border-top-left-radius: 4px;
     }
 
     .user-message .message-content {
         background: rgba(0, 120, 190, 0.25);
         border: 1px solid rgba(0, 163, 255, 0.3);
-        border-top-right-radius: 4px; /* Bo góc đặc trưng bên phải */
+        border-top-right-radius: 4px;
         color: #ffffff;
     }
 
-    /* Tùy chỉnh nút Sidebar và các thành phần khác */
     div.stButton > button:first-child {
         background-color: #0078BE;
         color: white;
@@ -95,19 +83,29 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==========================================
-# 2. MOCK DATA
+# 2. HÀM NẠP DỮ LIỆU TỪ JSON
 # ==========================================
-MOCK_PATIENTS = {
-    "Nguyễn Thị A": {
-        "age": 45, "sex": "Nữ", "conditions": ["Đái tháo đường type 2"]
-    },
-    "Trần Văn B": {
-        "age": 62, "sex": "Nam", "conditions": ["Tăng huyết áp"]
-    },
-    "Lê Thị C": {
-        "age": 38, "sex": "Nữ", "conditions": ["Đang mang thai tuần 28"]
-    }
-}
+@st.cache_data # Dùng cache để không phải đọc file liên tục mỗi khi UI reload
+def load_patients_from_json():
+    patients = {}
+    # Đường dẫn tương đối từ file app.py
+    data_path = os.path.join("src", "data", "patients")
+    
+    if os.path.exists(data_path):
+        for filename in os.listdir(data_path):
+            if filename.endswith(".json"):
+                with open(os.path.join(data_path, filename), "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                    # Lấy 'name' làm key để hiển thị trên Sidebar
+                    patients[data["name"]] = data
+    return patients
+
+MOCK_PATIENTS = load_patients_from_json()
+
+# Kiểm tra nếu không có dữ liệu
+if not MOCK_PATIENTS:
+    st.error("Không tìm thấy dữ liệu bệnh nhân trong thư mục src/data/patients/")
+    st.stop()
 
 # ==========================================
 # 3. SIDEBAR & LOGIC
@@ -122,6 +120,7 @@ patient = MOCK_PATIENTS[selected_name]
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
+# Reset chat khi đổi bệnh nhân
 if "last_patient" not in st.session_state or st.session_state.last_patient != selected_name:
     st.session_state.chat_history = []
     st.session_state.last_patient = selected_name
@@ -144,7 +143,6 @@ for message in st.session_state.chat_history:
         </div>
         """, unsafe_allow_html=True)
     else:
-        # User message: Nội dung trước, Avatar sau để hiện bên phải
         st.markdown(f"""
         <div class="message user-message">
             <div class="message-content">{message["content"]}</div>
@@ -160,16 +158,13 @@ st.markdown('</div>', unsafe_allow_html=True)
 user_input = st.chat_input("Nhập câu hỏi của bạn tại đây...")
 
 if user_input:
-    # Thêm tin nhắn user vào lịch sử
     st.session_state.chat_history.append({"role": "user", "content": user_input})
     
-    # Hiệu ứng chờ phản hồi
     with st.spinner("Đang phân tích..."):
         time.sleep(0.8)
     
-    # Phản hồi mẫu của Bot
-    bot_reply = "Tôi đã nhận được thông tin. Đây là phản hồi từ trợ lý Vinmec dành cho bạn."
+    # Ở đây bạn có thể thêm logic xử lý dựa trên dữ liệu 'lab_results' có trong file JSON
+    bot_reply = f"Tôi đã nhận được câu hỏi về bệnh nhân {selected_name}. Hệ thống đang phân tích {len(patient['lab_results'])} chỉ số xét nghiệm..."
     st.session_state.chat_history.append({"role": "bot", "content": bot_reply})
     
-    # Làm mới trang để cập nhật giao diện
     st.rerun()
