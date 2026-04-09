@@ -50,7 +50,7 @@ def build_graph():
 graph = build_graph()
 
 
-def _state_from_patient_id(patient_id: str) -> AgentState:
+def _state_from_patient_id(patient_id: str, llm_provider: str = "azure") -> AgentState:
     patient = get_patient(patient_id)
     return {
         "patient_profile": {
@@ -62,6 +62,7 @@ def _state_from_patient_id(patient_id: str) -> AgentState:
             "test_date": patient.test_date,
         },
         "lab_results": [result.model_dump() for result in patient.lab_results],
+        "llm_provider": llm_provider,
         "errors": [],
     }
 
@@ -83,34 +84,63 @@ def _fill_critical_defaults(state: AgentState) -> AgentState:
     return state
 
 
-def run_workflow(*, patient_id: str | None = None, initial_state: AgentState | None = None) -> AgentState:
+def run_workflow(*, patient_id: str | None = None, initial_state: AgentState | None = None, llm_provider: str = "azure") -> AgentState:
     """
     Run the complete Lumina workflow.
 
     Inputs:
       - patient_id: load patient from mock dataset, or
       - initial_state: caller-supplied state payload
+      - llm_provider: 'azure' (default) or 'groq'
     """
     if initial_state is None and patient_id is None:
         raise ValueError("Provide either patient_id or initial_state")
 
-    state = initial_state if initial_state is not None else _state_from_patient_id(patient_id)  # type: ignore[arg-type]
+    state = initial_state if initial_state is not None else _state_from_patient_id(patient_id, llm_provider=llm_provider)  # type: ignore[arg-type]
     result = graph.invoke(state)
     return _fill_critical_defaults(result)
 
 
-def run_agent_turn(user_q: str, history: list):
+def build_llm(provider: str = "azure"):
     """
-    Run a single turn of the chat agent for follow-up questions.
+    Build LLM client for the specified provider.
+    Supported: 'azure' or 'groq'
     """
+    if provider.lower() == "groq":
+        api_key = os.getenv("GROQ_API_KEY")
+        if not api_key:
+            raise RuntimeError("GROQ_API_KEY not set")
+        try:
+            from langchain_groq import ChatGroq
+        except ImportError:
+            raise RuntimeError("langchain-groq not installed. Run: pip install langchain-groq")
+        return ChatGroq(api_key=api_key, model="llama-3.3-70b-versatile")
+    
+    # Default to Azure
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
         raise RuntimeError("OPENAI_API_KEY not set")
-    llm = AzureAIOpenAIApiChatModel(
+    try:
+        from langchain_azure_ai.chat_models import AzureAIOpenAIApiChatModel
+    except ImportError:
+        raise RuntimeError("langchain-azure-ai not installed")
+    return AzureAIOpenAIApiChatModel(
         endpoint="https://models.inference.ai.azure.com",
         credential=api_key,
         model="gpt-4o",
     )
+
+
+def run_agent_turn(user_q: str, history: list, provider: str = "azure"):
+    """
+    Run a single turn of the chat agent for follow-up questions.
+    
+    Args:
+      - user_q: User's question
+      - history: List of previous messages
+      - provider: 'azure' (default) or 'groq'
+    """
+    llm = build_llm(provider=provider)
     messages = history + [HumanMessage(content=user_q)]
     response = llm.invoke(messages)
     return messages + [response]

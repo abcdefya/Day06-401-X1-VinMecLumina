@@ -10,6 +10,7 @@ class AgentState(TypedDict, total=False):
     messages: Annotated[list[AnyMessage], add_messages] # Chat message history
     patient_profile: dict[str, Any]                      # Patient demographics and history
     lab_results: list[dict[str, Any]]                   # Normalized lab test results
+    llm_provider: str                                   # LLM provider selection: 'azure' or 'groq'
     is_critical: bool                                   # Flag for life-threatening values
     critical_alert: dict[str, Any] | None               # Data for emergency notifications
     overall_severity: str                               # Overall health status (e.g., Normal, High Risk)
