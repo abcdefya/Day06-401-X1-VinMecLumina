@@ -1,0 +1,46 @@
+{
+  "patient_id": "P002",
+  "name": "Trần Văn B",
+  "age": 62,
+  "sex": "Nam",
+  "conditions": ["Tăng huyết áp"],
+  "test_date": "2026-04-08",
+  "lab_results": [
+    {
+      "test_code": "WBC",
+      "test_name": "Bạch cầu",
+      "value": 6.8,
+      "unit": "×10⁹/L",
+      "ref_low": 4.0,
+      "ref_high": 10.0,
+      "flag": "NORMAL"
+    },
+    {
+      "test_code": "HGB",
+      "test_name": "Hemoglobin",
+      "value": 138,
+      "unit": "g/L",
+      "ref_low": 130,
+      "ref_high": 170,
+      "flag": "NORMAL"
+    },
+    {
+      "test_code": "CREATININE",
+      "test_name": "Creatinine",
+      "value": 91,
+      "unit": "μmol/L",
+      "ref_low": 62,
+      "ref_high": 106,
+      "flag": "NORMAL"
+    },
+    {
+      "test_code": "LDL",
+      "test_name": "LDL Cholesterol",
+      "value": 2.8,
+      "unit": "mmol/L",
+      "ref_low": null,
+      "ref_high": 3.0,
+      "flag": "NORMAL"
+    }
+  ]
+}

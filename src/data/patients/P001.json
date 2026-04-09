@@ -1,0 +1,46 @@
+{
+  "patient_id": "P001",
+  "name": "Nguyễn Thị A",
+  "age": 45,
+  "sex": "Nữ",
+  "conditions": ["Đái tháo đường type 2"],
+  "test_date": "2026-04-08",
+  "lab_results": [
+    {
+      "test_code": "HBA1C",
+      "test_name": "HbA1c",
+      "value": 8.2,
+      "unit": "%",
+      "ref_low": 4.0,
+      "ref_high": 5.6,
+      "flag": "HIGH"
+    },
+    {
+      "test_code": "LDL",
+      "test_name": "LDL Cholesterol",
+      "value": 3.4,
+      "unit": "mmol/L",
+      "ref_low": null,
+      "ref_high": 3.0,
+      "flag": "HIGH"
+    },
+    {
+      "test_code": "CREATININE",
+      "test_name": "Creatinine",
+      "value": 78,
+      "unit": "μmol/L",
+      "ref_low": 44,
+      "ref_high": 97,
+      "flag": "NORMAL"
+    },
+    {
+      "test_code": "GLUCOSE_F",
+      "test_name": "Glucose (đói)",
+      "value": 9.1,
+      "unit": "mmol/L",
+      "ref_low": 3.9,
+      "ref_high": 6.1,
+      "flag": "HIGH"
+    }
+  ]
+}
