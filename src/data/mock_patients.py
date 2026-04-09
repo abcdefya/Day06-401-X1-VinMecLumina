@@ -10,7 +10,7 @@ Usage:
 from __future__ import annotations
 import json
 from pathlib import Path
-from src.models import PatientProfile, LabResult, ResultFlag
+from src.services.models import PatientProfile, LabResult, ResultFlag
 
 _DATA_DIR = Path(__file__).parent / "patients"
 

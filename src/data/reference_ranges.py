@@ -7,7 +7,7 @@ Consumed by:
 """
 from __future__ import annotations
 from typing import Optional
-from src.models import SeverityLevel, LabResult, ResultFlag
+from src.services.models import SeverityLevel, LabResult, ResultFlag
 
 
 # ---------------------------------------------------------------------------

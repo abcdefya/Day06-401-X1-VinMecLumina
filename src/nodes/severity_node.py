@@ -1,4 +1,4 @@
-from src.models import LabResult, ResultFlag
+from src.services.models import LabResult, ResultFlag
 from src.data.reference_ranges import classify_severity, classify_overall_severity
 
 def severity_node(state: dict) -> dict:

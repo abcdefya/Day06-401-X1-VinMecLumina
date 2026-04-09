@@ -2,8 +2,8 @@ import streamlit as st
 
 from src.data.mock_patients import get_all_patients, get_patient
 from src.data.reference_ranges import classify_severity
-from src.models import LabResult, ResultFlag
-from src.workflow import run_workflow
+from src.services.models import LabResult, ResultFlag
+from src.agents.agent import run_workflow
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Page config
