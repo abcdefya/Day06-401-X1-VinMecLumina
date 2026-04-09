@@ -1,0 +1,12 @@
+openai
+google-generativeai
+python-dotenv
+pydantic
+requests
+pytest
+langchain
+langchain-openai
+langgraph
+ipykernel
+langchain-azure-ai
+langchain-groq
