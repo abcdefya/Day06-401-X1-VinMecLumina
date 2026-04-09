@@ -301,11 +301,11 @@ SEVERITY_RULES = {
 
 | # | Person | Role | Responsibility | Expected Output | Dependencies |
 |---|---|---|---|---|---|
-| 1 | **Hoàng Thị Thanh Tuyền** | UI Lead (Streamlit) | Build all screens: patient selector sidebar, lab results table with colors, AI output panel layout, feedback buttons | `app.py` — full Streamlit UI skeleton that accepts Python dict inputs | Needs mock data format from Person 3 |
-| 2 | **Lê Minh Khang** | AI Logic | Write system prompt, explain_node, suggest_node LLM calls, response parser, `lab_kb.py` | `src/nodes/explain_node.py`, `src/nodes/suggest_node.py`, `src/data/lab_kb.py` | Needs patient JSON format from Person 3 |
+| 1 | **Dương Khoa Điềm** | UI Lead (Streamlit) | Build all screens: patient selector sidebar, lab results table with colors, AI output panel layout, feedback buttons | `app.py` — full Streamlit UI skeleton that accepts Python dict inputs | Needs mock data format from Person 3 |
+| 2 | **Hoàng Thị Thanh Tuyền** | AI Logic | Write system prompt, explain_node, suggest_node LLM calls, response parser, `lab_kb.py` | `src/nodes/explain_node.py`, `src/nodes/suggest_node.py`, `src/data/lab_kb.py` | Needs patient JSON format from Person 3 |
 | 3 | **Đỗ Thế Anh** | Data + Mock API | Create 3 patient JSON files, `reference_ranges.py`, data loader functions, define shared data schema | `src/data/mock_patients.py`, `src/data/reference_ranges.py` | **FIRST to deliver** — others depend on this |
 | 4 | **Nguyễn Hồ Bảo Thiên** | Guardrails + Rule Engine | Build `guard_node` (critical threshold check), `severity_node` (rule-based classification), post-LLM keyword filter | `src/nodes/guard_node.py`, `src/nodes/severity_node.py` | Needs critical thresholds from Person 3 |
-| 5 | **Dương Khoa Điềm** | LangGraph Orchestration | Wire all nodes into LangGraph graph, define AgentState, handle routing (normal vs critical path), expose `run_workflow()` function | `src/workflow.py` — complete graph with all 4 nodes | Needs node signatures from Persons 2 and 4 |
+| 5 | **Lê Minh Khang** | LangGraph Orchestration | Wire all nodes into LangGraph graph, define AgentState, handle routing (normal vs critical path), expose `run_workflow()` function | `src/workflow.py` — complete graph with all 4 nodes | Needs node signatures from Persons 2 and 4 |
 | 6 | **Võ Thanh Chung** | Integration + Demo Polish | Connect UI to workflow, CSS styling (Vinmec colors), fix integration bugs, prepare demo script, final QA | `app.py` final, `demo_script.md`, CSS overrides | Needs working workflow from Person 5 and UI from Person 1 |
 
 **Critical path:** Person 3 → Persons 2 & 4 (parallel) → Person 5 → Person 6 + Person 1 (parallel) → Done
