@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: lumina-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: lumina-api
+    restart: unless-stopped
+    depends_on:
+      - redis
+    ports:
+      - "8000:8000"
+    environment:
+      LUMINA_REDIS_URL: redis://redis:6379/0
+      LUMINA_API_KEYS: user_a:key_a,user_b:key_b
+      LUMINA_RATE_LIMIT_PER_MINUTE: "10"
+      LUMINA_MONTHLY_COST_LIMIT_USD: "10"
+      LUMINA_DEFAULT_REQUEST_COST_USD: "0.05"
+      LUMINA_ANALYZE_COST_USD: "0.05"
+      LUMINA_INPUT_COST_PER_1K_USD: "0.005"
+      LUMINA_OUTPUT_COST_PER_1K_USD: "0.015"
+      LUMINA_CONVERSATION_TTL_SECONDS: "86400"
+      LUMINA_SHUTDOWN_GRACE_SECONDS: "10"
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
