@@ -12,9 +12,9 @@ SLO_ERROR_RATE_PCT = 5.0    # Error rate < 5 %
 SLO_COST_USD_MONTHLY = 10.0 # Monthly cost < $10
 
 RUNBOOKS = {
-    "High P95 Latency":  "https://github.com/your-org/lumina/wiki/Runbook-High-Latency",
-    "High Error Rate":   "https://github.com/your-org/lumina/wiki/Runbook-High-Error-Rate",
-    "Cost Budget Alert": "https://github.com/your-org/lumina/wiki/Runbook-Cost-Budget",
+    "High P95 Latency":  "https://github.com/abcdefya/NhomX1-401-Day06/blob/main/docs/runbooks/high-latency.md",
+    "High Error Rate":   "https://github.com/abcdefya/NhomX1-401-Day06/blob/main/docs/runbooks/high-error-rate.md",
+    "Cost Budget Alert": "https://github.com/abcdefya/NhomX1-401-Day06/blob/main/docs/runbooks/cost-budget.md",
 }
 
 # ── Auto-refresh ──────────────────────────────────────────────────────────────
