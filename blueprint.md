@@ -1,4 +1,4 @@
-<img width="437" height="43" alt="image" src="https://github.com/user-attachments/assets/c570f1b7-9ed3-400d-bcd5-b63193d11375" /># Day 13 Observability Lab Report
+# Day 13 Observability Lab Report
 
 > **Instruction**: Fill in all sections below. This report is designed to be parsed by an automated grading assistant. Ensure all tags (e.g., `[GROUP_NAME]`) are preserved.
 
