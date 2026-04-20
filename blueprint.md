@@ -1,4 +1,4 @@
-﻿# Day 13 Observability Lab Report
+# Day 13 Observability Lab Report
 
 > **Instruction**: Fill in all sections below. This report is designed to be parsed by an automated grading assistant. Ensure all tags (e.g., `[GROUP_NAME]`) are preserved.
 
@@ -7,21 +7,12 @@
 - [GROUP_NAME]: C401-X4
 - [REPO_URL]: https://github.com/thiennguyen37-qn/NhomX4-401-Day13.git
 - [MEMBERS]:
-<<<<<<< HEAD
-  - Member 1: Vo Thanh Chung | Role: Logging & PII
-  - Member 2: Do The Anh | Role: Tracing & Enrichment
-  - Member 3: Nguyen Ho Bao Thien | Role: SLO & Alerts
-  - Member 4: Duong Khoa Diem | Role: Load Test & Dashboard
-  - Member 5: Le Bao Khang | Role: Demo & Report
-  - Member 6: Hoang Thi Thanh Tuyen | Role: Demo & Report
-=======
-  - Member 1: Võ Thanh Chung | Role:
-  - Member 2: Đỗ Thế Anh | Role:
-  - Member 3: Nguyễn Hồ Bảo Thiên |
-  - Member 4: Dương Khoa Điềm | Role:
-  - Member 5: Lê Minh Khang | Role:
-  - Member 6: Hoàng Thị Thanh Tuyền | Role:
->>>>>>> 473c7bdcc223a030422b83a2b1c5758e6e797016
+  - Member 1: Võ Thanh Chung | Role: Logging & PII
+  - Member 2: Đỗ Thế Anh | Role: Tracing & Enrichment
+  - Member 3: Nguyễn Hồ Bảo Thiên | Role: SLO & Alerts
+  - Member 4: Dương Khoa Điềm | Role: Load Test & Dashboard
+  - Member 5: Lê Minh Khang | Role: Demo & Report
+  - Member 6: Hoàng Thị Thanh Tuyền | Role: Demo & Report
 
 ---
 
@@ -40,7 +31,7 @@
 - [EVIDENCE_CORRELATION_ID_SCREENSHOT]:
 - [EVIDENCE_PII_REDACTION_SCREENSHOT]:
 - [EVIDENCE_TRACE_WATERFALL_SCREENSHOT]:
-- [TRACE_WATERFALL_EXPLANATION]: Trong waterfall, span Ä‘Ã¡ng chÃº Ã½ lÃ  chuá»—i child span `explain-HBA1C` -> `explain-LDL` -> `explain-GLUCOSE_F` dÆ°á»›i `lumina-workflow`. á»ž khoáº£ng `2026-04-20 22:17:08` Ä‘áº¿n `22:17:51`, cÃ¡c span `explain-*` lÃªn `Level = ERROR`, cho tháº¥y lá»—i xáº£y ra khi gá»i LLM Ä‘á»ƒ sinh diá»…n giáº£i cho tá»«ng xÃ©t nghiá»‡m. Tuy váº­y span cha `lumina-workflow` váº«n káº¿t thÃºc thÃ nh cÃ´ng (Ä‘á»‘i chiáº¿u log `logs/2026-04-20.log:4`, `correlation_id=f11e2e76-89ff-4b57-8aa7-71167f700d5c`, `error=null`) vÃ¬ `explain_node` cÃ³ cÆ¡ cháº¿ fallback deterministic khi LLM lá»—i. Insight chÃ­nh: há»‡ thá»‘ng Ä‘ang cÃ³ tÃ­nh chá»‹u lá»—i tá»‘t á»Ÿ má»©c workflow, nhÆ°ng cáº§n giÃ¡m sÃ¡t riÃªng error-rate cá»§a span `explain-*` Ä‘á»ƒ phÃ¡t hiá»‡n sá»›m suy giáº£m cháº¥t lÆ°á»£ng tráº£ lá»i.
+- [TRACE_WATERFALL_EXPLANATION]: Trong waterfall, span đáng chú ý là chuỗi child span `explain-HBA1C` -> `explain-LDL` -> `explain-GLUCOSE_F` dưới `lumina-workflow`. Ở khoảng `2026-04-20 22:17:08` đến `22:17:51`, các span `explain-*` lên `Level = ERROR`, cho thấy lỗi xảy ra khi gọi LLM để sinh diễn giải cho từng xét nghiệm. Tuy vậy span cha `lumina-workflow` vẫn kết thúc thành công (đối chiếu log `logs/2026-04-20.log:4`, `correlation_id=f11e2e76-89ff-4b57-8aa7-71167f700d5c`, `error=null`) vì `explain_node` có cơ chế fallback deterministic khi LLM lỗi. Insight chính: hệ thống đang có tính chịu lỗi tốt ở mức workflow, nhưng cần giám sát riêng error-rate của span `explain-*` để phát hiện sớm suy giảm chất lượng trả lời.
 
 ### 3.2 Dashboard & SLOs
 
@@ -63,19 +54,19 @@
 
 - [SCENARIO_NAME]: `llm_tool_span_error_but_workflow_survives`
 - [SYMPTOMS_OBSERVED]:
-  - TrÃªn Tracing, cÃ¡c span `explain-HBA1C`, `explain-LDL`, `explain-GLUCOSE_F` xuáº¥t hiá»‡n `Level = ERROR` (khung thá»i gian khoáº£ng `2026-04-20 22:17:08` Ä‘áº¿n `22:17:51`).
-  - Tuy nhiÃªn `lumina-workflow` váº«n hoÃ n táº¥t (khÃ´ng crash toÃ n luá»“ng), ngÆ°á»i dÃ¹ng váº«n nháº­n pháº£n há»“i nhÆ°ng cháº¥t lÆ°á»£ng cÃ³ lÃºc giáº£m (vÃ­ dá»¥ cÃ¢u tráº£ lá»i xin lá»—i/chung chung).
+  - Trên Tracing, các span `explain-HBA1C`, `explain-LDL`, `explain-GLUCOSE_F` xuất hiện `Level = ERROR` (khung thời gian khoảng `2026-04-20 22:17:08` đến `22:17:51`).
+  - Tuy nhiên `lumina-workflow` vẫn hoàn tất (không crash toàn luồng), người dùng vẫn nhận phản hồi nhưng chất lượng có lúc giảm (ví dụ câu trả lời xin lỗi/chung chung).
 - [ROOT_CAUSE_PROVED_BY]:
-  - **Trace evidence**: nhiá»u child span `explain-*` bá»‹ `ERROR` trong cÃ¹ng phiÃªn cháº¡y, cho tháº¥y lá»—i xáº£y ra táº¡i bÆ°á»›c gá»i LLM Ä‘á»ƒ giáº£i thÃ­ch tá»«ng chá»‰ sá»‘.
-  - **Log evidence**: `logs/2026-04-20.log:4` cÃ³ `event=workflow.complete`, `correlation_id=f11e2e76-89ff-4b57-8aa7-71167f700d5c`, `latency_ms=57196`, `error=null` -> chá»©ng minh workflow chÃ­nh váº«n sá»‘ng nhá» cÆ¡ cháº¿ fallback.
-  - **Code evidence**: `src/nodes/explain_node.py` báº¯t lá»—i trong `_llm_explanation(...)` vÃ  `pass` Ä‘á»ƒ giá»¯ deterministic fallback, nÃªn span con lá»—i nhÆ°ng workflow khÃ´ng fail.
+  - **Trace evidence**: nhiều child span `explain-*` bị `ERROR` trong cùng phiên chạy, cho thấy lỗi xảy ra tại bước gọi LLM để giải thích từng chỉ số.
+  - **Log evidence**: `logs/2026-04-20.log:4` có `event=workflow.complete`, `correlation_id=f11e2e76-89ff-4b57-8aa7-71167f700d5c`, `latency_ms=57196`, `error=null` -> chứng minh workflow chính vẫn sống nhờ cơ chế fallback.
+  - **Code evidence**: `src/nodes/explain_node.py` bắt lỗi trong `_llm_explanation(...)` và `pass` để giữ deterministic fallback, nên span con lỗi nhưng workflow không fail.
 - [FIX_ACTION]:
-  - Cáº¥u hÃ¬nh/kiá»ƒm tra láº¡i provider LLM (API key, endpoint, háº¡n má»©c), Ä‘á»“ng thá»i báº­t fallback provider (`azure` <-> `groq`) khi má»™t nhÃ  cung cáº¥p lá»—i.
-  - Bá»• sung logging chi tiáº¿t trong khá»‘i `except` cá»§a `explain_node` (ghi loáº¡i lá»—i + test_code + correlation_id) Ä‘á»ƒ truy váº¿t nhanh hÆ¡n thay vÃ¬ chá»‰ tháº¥y `ERROR` trÃªn trace.
+  - Cấu hình/kiểm tra lại provider LLM (API key, endpoint, hạn mức), đồng thời bật fallback provider (`azure` <-> `groq`) khi một nhà cung cấp lỗi.
+  - Bổ sung logging chi tiết trong khối `except` của `explain_node` (ghi loại lỗi + test_code + correlation_id) để truy vết nhanh hơn thay vì chỉ thấy `ERROR` trên trace.
 - [PREVENTIVE_MEASURE]:
-  - Thiáº¿t láº­p alert theo tá»· lá»‡ `ERROR` cá»§a span `explain-*` (vÃ­ dá»¥ >5% trong 5 phÃºt thÃ¬ cáº£nh bÃ¡o).
-  - ThÃªm circuit breaker/retry cÃ³ backoff cho gá»i LLM theo tá»«ng test.
-  - Theo dÃµi SLI riÃªng cho `explain-*` (error-rate, latency) vÃ  runbook xá»­ lÃ½ sá»± cá»‘ provider.
+  - Thiết lập alert theo tỷ lệ `ERROR` của span `explain-*` (ví dụ >5% trong 5 phút thì cảnh báo).
+  - Thêm circuit breaker/retry có backoff cho gọi LLM theo từng test.
+  - Theo dõi SLI riêng cho `explain-*` (error-rate, latency) và runbook xử lý sự cố provider.
 
 ---
 
@@ -93,12 +84,12 @@
 
 ### Nguyen Ho Bao Thien
 
-- [TASKS_COMPLETED]: ÄÃ³ng gÃ³p cho SLO vÃ  Alerts flow.
+- [TASKS_COMPLETED]: Đóng góp cho SLO và Alerts flow.
 - [EVIDENCE_LINK]:
 
 ### Duong Khoa Diem
 
-- [TASKS_COMPLETED]: Testing, monitoring, theo dÃµi dashboard
+- [TASKS_COMPLETED]: Testing, monitoring, theo dõi dashboard
 - [EVIDENCE_LINK]:
 
 ### Le Minh Khang
@@ -109,6 +100,6 @@
 ### Hoang Thi Thanh Tuyen
 
 - [TASKS_COMPLETED]: Runbook/hallucination updates, prototype va demo/report support.
-- [EVIDENCE_LINK]:47056e9411e7928b9e8a22ccc5e020c9faf82fe2; https://github.com/thiennguyen37-qn/NhomX4-401-Day13/commit/8e4ee94;
+- [EVIDENCE_LINK]: https://github.com/thiennguyen37-qn/NhomX4-401-Day13/commit/47056e9411e7928b9e8a22ccc5e020c9faf82fe2; https://github.com/thiennguyen37-qn/NhomX4-401-Day13/commit/8e4ee94;
 
 ---
