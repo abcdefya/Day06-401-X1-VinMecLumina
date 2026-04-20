@@ -1,3 +1,5 @@
+import time
+
 import streamlit as st
 from dotenv import load_dotenv
 load_dotenv()
@@ -6,6 +8,7 @@ from src.data.mock_patients import get_all_patients, get_patient
 from src.data.reference_ranges import classify_severity
 from src.services.models import LabResult, ResultFlag
 from src.agents.agent import run_workflow
+from src.core.metrics_store import record
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Page config
@@ -124,15 +127,58 @@ def _render_lab_table(patient):
     """, unsafe_allow_html=True)
 
 
-def _render_action_buttons():
+def _record_feedback(*, is_helpful: bool, result: dict):
+    analysis_id = st.session_state.get("analysis_id")
+    if analysis_id is None:
+        return False
+    try:
+        record("feedback", {
+            "analysis_id": analysis_id,
+            "patient_id": st.session_state.get("selected_patient_id", "unknown"),
+            "is_helpful": is_helpful,
+            "is_hallucination_proxy": (not is_helpful),
+            "overall_severity": result.get("overall_severity", "UNKNOWN"),
+            "is_critical_case": bool(result.get("is_critical", False)),
+        })
+        return True
+    except Exception:
+        return False
+
+
+def _render_action_buttons(result: dict):
     st.divider()
+    analysis_id = st.session_state.get("analysis_id", "legacy")
+    votes = st.session_state.setdefault("feedback_votes", {})
+    existing_vote = votes.get(str(analysis_id))
+    disable_buttons = existing_vote is not None
+
     c1, c2, c3 = st.columns(3)
     with c1:
         st.link_button("📅 Đặt lịch Vinmec", "https://www.vinmec.com/vi/dat-lich-kham/")
     with c2:
-        st.button("👍 Hữu ích", key="fb_up")
+        up_clicked = st.button("👍 Hữu ích", key=f"fb_up_{analysis_id}", disabled=disable_buttons)
     with c3:
-        st.button("👎 Chưa tốt", key="fb_down")
+        down_clicked = st.button("👎 Không hữu ích", key=f"fb_down_{analysis_id}", disabled=disable_buttons)
+
+    if up_clicked:
+        if _record_feedback(is_helpful=True, result=result):
+            votes[str(analysis_id)] = "helpful"
+            st.session_state.feedback_votes = votes
+            st.success("Đã ghi nhận phản hồi: Hữu ích.")
+        else:
+            st.error("Chưa ghi nhận được phản hồi. Vui lòng thử lại.")
+    if down_clicked:
+        if _record_feedback(is_helpful=False, result=result):
+            votes[str(analysis_id)] = "not_helpful"
+            st.session_state.feedback_votes = votes
+            st.warning("Đã ghi nhận phản hồi: Không hữu ích.")
+        else:
+            st.error("Chưa ghi nhận được phản hồi. Vui lòng thử lại.")
+    if existing_vote == "helpful":
+        st.caption("Bạn đã đánh giá phản hồi này là hữu ích.")
+    if existing_vote == "not_helpful":
+        st.caption("Bạn đã đánh giá phản hồi này là không hữu ích.")
+
     st.caption("⚕️ *Lưu ý: Kết quả phân tích chỉ mang tính tham khảo. Vui lòng tham khảo ý kiến bác sĩ để được tư vấn chính xác.*")
 
 
@@ -149,7 +195,7 @@ def _render_ai_output(result: dict):
         st.markdown("### 📌 Bước tiếp theo:")
         for i, s in enumerate(result.get("suggestions", []), 1):
             st.markdown(f"{i}. {s}")
-        _render_action_buttons()
+        _render_action_buttons(result)
         return
 
     overall = result.get("overall_severity", "NORMAL")
@@ -184,7 +230,7 @@ def _render_ai_output(result: dict):
         for i, s in enumerate(suggestions, 1):
             st.markdown(f"{i}. {s}")
 
-    _render_action_buttons()
+    _render_action_buttons(result)
 
 
 def _build_context_prompt(patient, result: dict) -> str:
@@ -306,6 +352,7 @@ if st.session_state.get("selected_patient_id") != patient_id:
     st.session_state.workflow_result = None
     st.session_state.chat_history = []
     st.session_state.chat_display = []
+    st.session_state.analysis_id = None
 
 st.sidebar.divider()
 st.sidebar.info("🤖 AI hiểu dữ liệu — Bác sĩ hiểu bệnh nhân.")
@@ -329,6 +376,7 @@ with mid:
 if analyze:
     with st.spinner("Lumina đang phân tích..."):
         st.session_state.workflow_result = run_workflow(patient_id=patient_id, llm_provider=llm_provider_key)
+    st.session_state.analysis_id = int(time.time() * 1000)
     # Reset chat so follow-up starts fresh for new analysis
     st.session_state.chat_history = []
     st.session_state.chat_display = []
