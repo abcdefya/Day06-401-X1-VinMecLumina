@@ -14,15 +14,8 @@ from src.agents.state import AgentState
 from langchain_core.messages import HumanMessage
 
 
-def _get_langfuse_handler():
-    """Return a Langfuse callback handler if keys are configured, else None."""
-    if not (os.getenv("LANGFUSE_SECRET_KEY") and os.getenv("LANGFUSE_PUBLIC_KEY")):
-        return None
-    try:
-        from langfuse.langchain import CallbackHandler
-        return CallbackHandler()  # reads LANGFUSE_* env vars automatically
-    except ImportError:
-        return None
+def _langfuse_enabled() -> bool:
+    return bool(os.getenv("LANGFUSE_SECRET_KEY") and os.getenv("LANGFUSE_PUBLIC_KEY"))
 
 
 def _route_from_guard(state: AgentState) -> str:
@@ -112,10 +105,23 @@ def run_workflow(*, patient_id: str | None = None, initial_state: AgentState | N
     state = initial_state if initial_state is not None else _state_from_patient_id(patient_id, llm_provider=llm_provider)  # type: ignore[arg-type]
     t0 = _time.time()
     error = None
-    langfuse_handler = _get_langfuse_handler()
-    config = {"callbacks": [langfuse_handler]} if langfuse_handler else {}
+
+    def _invoke():
+        return graph.invoke(state)
+
+    # Wrap with Langfuse trace if configured
+    if _langfuse_enabled():
+        try:
+            from langfuse import observe, get_client
+            _traced = observe(name="lumina-workflow")(_invoke)
+            result = _traced()
+            get_client().flush()
+        except Exception:
+            result = graph.invoke(state)
+    else:
+        result = graph.invoke(state)
+
     try:
-        result = graph.invoke(state, config=config)
         result = _fill_critical_defaults(result)
     except Exception as e:
         error = str(e)
@@ -183,10 +189,17 @@ def run_agent_turn(user_q: str, history: list, provider: str = "azure"):
     messages = history + [HumanMessage(content=user_q)]
     t0 = _time.time()
     error = None
-    langfuse_handler = _get_langfuse_handler()
-    invoke_config = {"callbacks": [langfuse_handler]} if langfuse_handler else {}
+    error = None
     try:
-        response = llm.invoke(messages, config=invoke_config)
+        if _langfuse_enabled():
+            from langfuse import observe, get_client
+            @observe(name="lumina-chat-turn")
+            def _chat():
+                return llm.invoke(messages)
+            response = _chat()
+            get_client().flush()
+        else:
+            response = llm.invoke(messages)
         result_messages = messages + [response]
     except Exception as e:
         error = str(e)

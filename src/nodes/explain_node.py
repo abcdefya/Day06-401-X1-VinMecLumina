@@ -116,12 +116,17 @@ def _llm_explanation(llm, system_prompt: str, patient_profile: dict[str, Any], l
         f"Knowledge: meaning={kb['meaning']}; high_hint={kb['high_hint']}; "
         f"low_hint={kb['low_hint']}; next_step={kb['safe_next_step']}"
     )
-    response = llm.invoke(
-        [
-            SystemMessage(content=system_prompt),
-            HumanMessage(content=human_prompt),
-        ]
-    )
+    msgs = [SystemMessage(content=system_prompt), HumanMessage(content=human_prompt)]
+
+    try:
+        from langfuse import observe
+        @observe(name=f"explain-{lab.get('test_code', 'lab')}")
+        def _call():
+            return llm.invoke(msgs)
+        response = _call()
+    except Exception:
+        response = llm.invoke(msgs)
+
     return str(getattr(response, "content", "") or "").strip()
 
 
