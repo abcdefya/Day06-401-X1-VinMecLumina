@@ -93,12 +93,36 @@ def run_workflow(*, patient_id: str | None = None, initial_state: AgentState | N
       - initial_state: caller-supplied state payload
       - llm_provider: 'azure' (default) or 'groq'
     """
+    import time as _time
+    from src.core.metrics_store import record
+
     if initial_state is None and patient_id is None:
         raise ValueError("Provide either patient_id or initial_state")
 
     state = initial_state if initial_state is not None else _state_from_patient_id(patient_id, llm_provider=llm_provider)  # type: ignore[arg-type]
-    result = graph.invoke(state)
-    return _fill_critical_defaults(result)
+    t0 = _time.time()
+    error = None
+    try:
+        result = graph.invoke(state)
+        result = _fill_critical_defaults(result)
+    except Exception as e:
+        error = str(e)
+        raise
+    finally:
+        latency_ms = int((_time.time() - t0) * 1000)
+        usage = (result.get("usage") or {}) if error is None else {}
+        record("workflow", {
+            "provider": llm_provider,
+            "patient_id": patient_id or "unknown",
+            "latency_ms": latency_ms,
+            "prompt_tokens": usage.get("prompt_tokens", 0),
+            "completion_tokens": usage.get("completion_tokens", 0),
+            "total_tokens": usage.get("total_tokens", 0),
+            "cost_usd": (usage.get("total_tokens", 0) / 1000) * 0.01,
+            "is_critical": (result.get("is_critical", False) if error is None else False),
+            "error": error,
+        })
+    return result
 
 
 def build_llm(provider: str = "azure"):
@@ -134,13 +158,36 @@ def build_llm(provider: str = "azure"):
 def run_agent_turn(user_q: str, history: list, provider: str = "azure"):
     """
     Run a single turn of the chat agent for follow-up questions.
-    
+
     Args:
       - user_q: User's question
       - history: List of previous messages
       - provider: 'azure' (default) or 'groq'
     """
+    import time as _time
+    from src.core.metrics_store import record
+
     llm = build_llm(provider=provider)
     messages = history + [HumanMessage(content=user_q)]
-    response = llm.invoke(messages)
-    return messages + [response]
+    t0 = _time.time()
+    error = None
+    try:
+        response = llm.invoke(messages)
+        result_messages = messages + [response]
+    except Exception as e:
+        error = str(e)
+        raise
+    finally:
+        latency_ms = int((_time.time() - t0) * 1000)
+        usage_meta = getattr(response, "response_metadata", {}) if error is None else {}
+        token_usage = usage_meta.get("token_usage", {}) if isinstance(usage_meta, dict) else {}
+        record("chat_turn", {
+            "provider": provider,
+            "latency_ms": latency_ms,
+            "prompt_tokens": token_usage.get("prompt_tokens", 0),
+            "completion_tokens": token_usage.get("completion_tokens", 0),
+            "total_tokens": token_usage.get("total_tokens", 0),
+            "cost_usd": (token_usage.get("total_tokens", 0) / 1000) * 0.01,
+            "error": error,
+        })
+    return result_messages
