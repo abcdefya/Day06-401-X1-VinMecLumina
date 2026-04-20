@@ -251,14 +251,17 @@ def _render_followup_chat(patient, result: dict):
         from src.agents.agent import run_agent_turn
         from langchain_core.messages import AIMessage
         with st.spinner("Lumina đang trả lời..."):
-            updated_history = run_agent_turn(user_q, history)
+            updated_history = run_agent_turn(user_q, history, provider=llm_provider_key)
         last_ai = next((m for m in reversed(updated_history) if isinstance(m, AIMessage)), None)
         if last_ai:
             reply = getattr(last_ai, "content", reply) or reply
         st.session_state.chat_history = updated_history
     except RuntimeError as e:
-        if "OPENAI_API_KEY" in str(e):
-            reply = "⚠️ Chưa cấu hình API key. Vui lòng thêm `OPENAI_API_KEY` vào file `.env` để dùng tính năng hỏi đáp."
+        if "OPENAI_API_KEY" in str(e) or "GROQ_API_KEY" in str(e):
+            if llm_provider_key == "groq":
+                reply = "⚠️ Chưa cấu hình Groq API. Vui lòng thêm `GROQ_API_KEY` vào file `.env` để dùng tính năng hỏi đáp."
+            else:
+                reply = "⚠️ Chưa cấu hình Azure API. Vui lòng thêm `OPENAI_API_KEY` vào file `.env` để dùng tính năng hỏi đáp."
     except Exception:
         pass  # keep default reply
 
@@ -272,6 +275,18 @@ def _render_followup_chat(patient, result: dict):
 # ──────────────────────────────────────────────────────────────────────────────
 st.sidebar.title("🏥 Vinmec Lumina")
 st.sidebar.caption("Trợ lý giải thích kết quả xét nghiệm")
+st.sidebar.divider()
+
+# API Provider selector
+st.sidebar.markdown("**⚙️ Cấu hình API:**")
+llm_provider = st.sidebar.radio(
+    "Chọn nhà cung cấp LLM:",
+    ["Azure OpenAI", "Groq"],
+    key="llm_provider_choice",
+    horizontal=False
+)
+llm_provider_key = "azure" if llm_provider == "Azure OpenAI" else "groq"
+
 st.sidebar.divider()
 
 @st.cache_data
@@ -311,7 +326,7 @@ with mid:
 
 if analyze:
     with st.spinner("Lumina đang phân tích..."):
-        st.session_state.workflow_result = run_workflow(patient_id=patient_id)
+        st.session_state.workflow_result = run_workflow(patient_id=patient_id, llm_provider=llm_provider_key)
     # Reset chat so follow-up starts fresh for new analysis
     st.session_state.chat_history = []
     st.session_state.chat_display = []

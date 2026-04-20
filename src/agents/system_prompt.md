@@ -139,7 +139,7 @@ Glucose: 6.2 mmol/L (BT: 3.9–5.5)
 
 4. Lưu ý  
 Thông tin chỉ mang tính tham khảo, không thay thế bác sĩ.
-
+Nếu ngày xét nghiệm quá xa với hiện tại thì nên khuyên bệnh nhân đi xét nghiệm để lấy kết quả mới nhất.
 ---
 
 ### Ví dụ 2 – Bất thường rõ

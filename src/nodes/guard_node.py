@@ -2,8 +2,8 @@ from src.data.reference_ranges import CRITICAL_THRESHOLDS, REFERENCE_RANGES
 
 def guard_node(state: dict) -> dict:
     """
-    Quét danh sách kết quả xét nghiệm để tìm các chỉ số vượt ngưỡng nguy kịch.
-    Khớp với cấu trúc AgentState: lab_results: list[dict] -> is_critical, critical_alert
+    Scan the list of lab results to find indicators exceeding critical thresholds.
+    Matches AgentState structure: lab_results: list[dict] -> is_critical, critical_alert
     """
     lab_results = state.get("lab_results", [])
     alerts = []
@@ -20,7 +20,7 @@ def guard_node(state: dict) -> dict:
             crit_low = thresholds.get("critical_low")
             crit_high = thresholds.get("critical_high")
             
-            # Ưu tiên lấy unit và test_name trực tiếp từ data bệnh nhân (JSON)
+            # Prefer to get unit and test_name directly from patient data (JSON)
             unit = lab.get("unit") or REFERENCE_RANGES.get(test_code, {}).get("unit", "")
             test_name = lab.get("test_name", test_code)
             
@@ -28,13 +28,13 @@ def guard_node(state: dict) -> dict:
                (crit_high is not None and value >= crit_high):
                 alerts.append({
                     "test_code": test_code,
-                    "test_name": test_name, # Thêm test_name để cảnh báo rõ nghĩa hơn
+                    "test_name": test_name, # Add test_name for clearer alerts
                     "value": value,
                     "unit": unit,
-                    "issue": "Chỉ số thấp hơn ngưỡng an toàn" if value <= crit_low else "Chỉ số cao hơn ngưỡng an toàn"
+                    "issue": "Indicator lower than safe threshold" if value <= crit_low else "Indicator higher than safe threshold"
                 })
                 
-    # Đóng gói critical_alert thành 1 dict (hoặc None) theo đúng AgentState
+    # Package critical_alert into 1 dict (or None) according to AgentState
     alert_payload = {"alerts": alerts} if alerts else None
     
     return {

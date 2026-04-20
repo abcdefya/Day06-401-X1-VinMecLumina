@@ -3,29 +3,28 @@ from src.data.reference_ranges import classify_severity, classify_overall_severi
 
 def severity_node(state: dict) -> dict:
     """
-    Sử dụng logic để đánh giá mức độ nghiêm trọng cho từng xét nghiệm
-    và tổng thể bệnh nhân.
+    Use logic to assess the severity level for each test and the overall patient.
     """
     lab_data = state.get("lab_results", [])
     lab_objects = []
     
     test_name_map = {}
     
-    # 1. Map dict state sang object cho hàm của Team Lead
+    # 1. Map dict state to object for Team Lead's function
     for item in lab_data:
         test_code = item.get("test_code", "")
         test_name = item.get("test_name", test_code)
         
         test_name_map[test_code] = test_name
         
-        # Xử lý an toàn cho enum ResultFlag
+        # Safe handling for ResultFlag enum
         flag_val = item.get("flag")
         try:
             flag_enum = ResultFlag(flag_val) if flag_val else ResultFlag.NORMAL
         except ValueError:
             flag_enum = ResultFlag.NORMAL
 
-        # ĐÃ SỬA: Thêm test_name vào lúc khởi tạo LabResult
+        # FIXED: Add test_name during LabResult initialization
         lab_obj = LabResult(
             test_code=test_code,
             test_name=test_name,  # <--- Dòng này vừa được thêm vào
@@ -37,7 +36,7 @@ def severity_node(state: dict) -> dict:
         )
         lab_objects.append(lab_obj)
         
-    # 2. Gọi logic phân loại đã có sẵn
+    # 2. Call the existing classification logic
     overall = classify_overall_severity(lab_objects)
     
     per_test_results = []
@@ -49,7 +48,7 @@ def severity_node(state: dict) -> dict:
             "severity": sev.name if hasattr(sev, 'name') else str(sev)
         })
         
-    # 3. Trả về format chuẩn xác của AgentState
+    # 3. Return the exact format of AgentState
     return {
         "overall_severity": overall.name if hasattr(overall, 'name') else str(overall),
         "per_test_severity": per_test_results

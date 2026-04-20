@@ -1,0 +1,48 @@
+services:
+  - type: redis
+    name: vinmec-lumina-redis
+    region: singapore
+    plan: starter
+    maxmemoryPolicy: noeviction
+
+  - type: web
+    name: vinmec-lumina-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    region: singapore
+    plan: starter
+    autoDeploy: true
+    healthCheckPath: /ready
+    envVars:
+      - key: LUMINA_REDIS_URL
+        fromService:
+          type: redis
+          name: vinmec-lumina-redis
+          property: connectionString
+      - key: LUMINA_API_KEYS
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: LUMINA_APP_NAME
+        value: Vinmec Lumina API
+      - key: LUMINA_APP_VERSION
+        value: "1.2.0"
+      - key: LUMINA_RATE_LIMIT_PER_MINUTE
+        value: "10"
+      - key: LUMINA_MONTHLY_COST_LIMIT_USD
+        value: "10"
+      - key: LUMINA_DEFAULT_REQUEST_COST_USD
+        value: "0.05"
+      - key: LUMINA_ANALYZE_COST_USD
+        value: "0.05"
+      - key: LUMINA_INPUT_COST_PER_1K_USD
+        value: "0.005"
+      - key: LUMINA_OUTPUT_COST_PER_1K_USD
+        value: "0.015"
+      - key: LUMINA_CONVERSATION_TTL_SECONDS
+        value: "86400"
+      - key: LUMINA_SHUTDOWN_GRACE_SECONDS
+        value: "10"

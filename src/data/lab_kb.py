@@ -1,7 +1,3 @@
-"""
-Inline knowledge base for common lab tests in MVP scope (Vietnamese).
-"""
-
 from __future__ import annotations
 
 LAB_KB: dict[str, dict[str, str]] = {
