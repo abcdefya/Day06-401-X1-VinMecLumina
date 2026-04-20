@@ -1,4 +1,4 @@
-# Day 13 Observability Lab Report
+<img width="437" height="43" alt="image" src="https://github.com/user-attachments/assets/c570f1b7-9ed3-400d-bcd5-b63193d11375" /># Day 13 Observability Lab Report
 
 > **Instruction**: Fill in all sections below. This report is designed to be parsed by an automated grading assistant. Ensure all tags (e.g., `[GROUP_NAME]`) are preserved.
 
@@ -11,7 +11,7 @@
   - Member 2: Đỗ Thế Anh | Role:
   - Member 3: Nguyễn Hồ Bảo Thiên |
   - Member 4: Dương Khoa Điềm | Role:
-  - Member 5: Lê Bảo Khang | Role:
+  - Member 5: Lê Minh Khang | Role:
   - Member 6: Hoàng Thị Thanh Tuyền | Role:
 
 ---
@@ -92,10 +92,10 @@
 - [TASKS_COMPLETED]: Testing, monitoring, theo dõi dashboard
 - [EVIDENCE_LINK]:
 
-### Le Bao Khang
+### Le Minh Khang
 
 - [TASKS_COMPLETED]: Dashboard/observability enhancement
-- [EVIDENCE_LINK]: https://github.com/thiennguyen37-qn/NhomX4-401-Day13/commit/e195a62
+- [EVIDENCE_LINK]: https://github.com/thiennguyen37-qn/NhomX4-401-Day13/commit/e195a62 ; https://github.com/thiennguyen37-qn/NhomX4-401-Day13/commit/e195a6250d325ff57314b6901bc89c95ad4364cf
 
 ### Hoang Thi Thanh Tuyen
 
