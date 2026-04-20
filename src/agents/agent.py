@@ -102,9 +102,18 @@ def run_workflow(*, patient_id: str | None = None, initial_state: AgentState | N
     if initial_state is None and patient_id is None:
         raise ValueError("Provide either patient_id or initial_state")
 
+    import uuid as _uuid
+    from src.core.logger import logger as _logger
+
     state = initial_state if initial_state is not None else _state_from_patient_id(patient_id, llm_provider=llm_provider)  # type: ignore[arg-type]
     t0 = _time.time()
     error = None
+    correlation_id = str(_uuid.uuid4())
+
+    _logger.log_event("workflow.start", {
+        "patient_id": patient_id or "unknown",
+        "provider": llm_provider,
+    }, correlation_id=correlation_id)
 
     def _invoke():
         return graph.invoke(state)
@@ -129,7 +138,7 @@ def run_workflow(*, patient_id: str | None = None, initial_state: AgentState | N
     finally:
         latency_ms = int((_time.time() - t0) * 1000)
         usage = (result.get("usage") or {}) if error is None else {}
-        record("workflow", {
+        metric = {
             "provider": llm_provider,
             "patient_id": patient_id or "unknown",
             "latency_ms": latency_ms,
@@ -139,7 +148,9 @@ def run_workflow(*, patient_id: str | None = None, initial_state: AgentState | N
             "cost_usd": (usage.get("total_tokens", 0) / 1000) * 0.01,
             "is_critical": (result.get("is_critical", False) if error is None else False),
             "error": error,
-        })
+        }
+        record("workflow", metric)
+        _logger.log_event("workflow.complete", metric, correlation_id=correlation_id)
     return result
 
 
