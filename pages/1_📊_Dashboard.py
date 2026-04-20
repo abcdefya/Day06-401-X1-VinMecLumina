@@ -18,6 +18,7 @@ RUNBOOKS = {
     "High P95 Latency": "https://github.com/abcdefya/NhomX1-401-Day06/blob/main/docs/runbooks/high-latency.md",
     "High Error Rate": "https://github.com/abcdefya/NhomX1-401-Day06/blob/main/docs/runbooks/high-error-rate.md",
     "Cost Budget Alert": "https://github.com/abcdefya/NhomX1-401-Day06/blob/main/docs/runbooks/cost-budget.md",
+    "High Hallucination Proxy Rate": "https://github.com/abcdefya/NhomX1-401-Day06/blob/main/docs/runbooks/hallucination-proxy.md",
 }
 
 METRICS_PATH = Path("metrics/metrics.jsonl")
@@ -121,7 +122,7 @@ def _render_dashboard_body(records: list[dict], has_changed: bool, loaded_at: pd
         )
     if feedback_total and halluc_rate > SLO_HALLUCINATION_RATE_PCT:
         alerts_fired.append(
-            f"🔴 **High Hallucination Proxy Rate**: {halluc_rate:.2f}% > {SLO_HALLUCINATION_RATE_PCT}%"
+            f"🔴 **High Hallucination Proxy Rate**: {halluc_rate:.2f}% > {SLO_HALLUCINATION_RATE_PCT}% - [Runbook]({RUNBOOKS['High Hallucination Proxy Rate']})"
         )
 
     if alerts_fired:
@@ -239,7 +240,7 @@ with st.sidebar:
 | High P95 Latency | > {SLO_P95_LATENCY_MS} ms | [Link]({RUNBOOKS['High P95 Latency']}) |
 | High Error Rate | > {SLO_ERROR_RATE_PCT} % | [Link]({RUNBOOKS['High Error Rate']}) |
 | Cost Budget | > ${SLO_COST_USD_MONTHLY}/month | [Link]({RUNBOOKS['Cost Budget Alert']}) |
-| Hallucination Proxy | > {SLO_HALLUCINATION_RATE_PCT} % | N/A |
+| Hallucination Proxy | > {SLO_HALLUCINATION_RATE_PCT} % | [Link]({RUNBOOKS['High Hallucination Proxy Rate']}) |
 """
     )
 
@@ -252,7 +253,7 @@ with st.sidebar:
 | P95 Latency | < {SLO_P95_LATENCY_MS} ms | [Runbook]({RUNBOOKS['High P95 Latency']}) |
 | Error Rate | < {SLO_ERROR_RATE_PCT} % | [Runbook]({RUNBOOKS['High Error Rate']}) |
 | Monthly Cost | < ${SLO_COST_USD_MONTHLY} | [Runbook]({RUNBOOKS['Cost Budget Alert']}) |
-| Hallucination Proxy | < {SLO_HALLUCINATION_RATE_PCT} % | N/A |
+| Hallucination Proxy | < {SLO_HALLUCINATION_RATE_PCT} % | [Runbook]({RUNBOOKS['High Hallucination Proxy Rate']}) |
 """
     )
 
