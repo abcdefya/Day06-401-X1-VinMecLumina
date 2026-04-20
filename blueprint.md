@@ -7,12 +7,21 @@
 - [GROUP_NAME]: C401-X4
 - [REPO_URL]: https://github.com/thiennguyen37-qn/NhomX4-401-Day13.git
 - [MEMBERS]:
+<<<<<<< HEAD
   - Member 1: Vo Thanh Chung | Role: Logging & PII
   - Member 2: Do The Anh | Role: Tracing & Enrichment
   - Member 3: Nguyen Ho Bao Thien | Role: SLO & Alerts
   - Member 4: Duong Khoa Diem | Role: Load Test & Dashboard
   - Member 5: Le Bao Khang | Role: Demo & Report
   - Member 6: Hoang Thi Thanh Tuyen | Role: Demo & Report
+=======
+  - Member 1: Võ Thanh Chung | Role:
+  - Member 2: Đỗ Thế Anh | Role:
+  - Member 3: Nguyễn Hồ Bảo Thiên |
+  - Member 4: Dương Khoa Điềm | Role:
+  - Member 5: Lê Minh Khang | Role:
+  - Member 6: Hoàng Thị Thanh Tuyền | Role:
+>>>>>>> 473c7bdcc223a030422b83a2b1c5758e6e797016
 
 ---
 
@@ -92,10 +101,10 @@
 - [TASKS_COMPLETED]: Testing, monitoring, theo dÃµi dashboard
 - [EVIDENCE_LINK]:
 
-### Le Bao Khang
+### Le Minh Khang
 
 - [TASKS_COMPLETED]: Dashboard/observability enhancement
-- [EVIDENCE_LINK]: https://github.com/thiennguyen37-qn/NhomX4-401-Day13/commit/e195a62
+- [EVIDENCE_LINK]: https://github.com/thiennguyen37-qn/NhomX4-401-Day13/commit/e195a62 ; https://github.com/thiennguyen37-qn/NhomX4-401-Day13/commit/e195a6250d325ff57314b6901bc89c95ad4364cf
 
 ### Hoang Thi Thanh Tuyen
 
