@@ -1,4 +1,6 @@
 import streamlit as st
+from dotenv import load_dotenv
+load_dotenv()
 
 from src.data.mock_patients import get_all_patients, get_patient
 from src.data.reference_ranges import classify_severity
