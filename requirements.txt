@@ -2,6 +2,7 @@ python-dotenv
 pydantic
 requests
 pytest
+langfuse
 langchain
 langchain-core
 langchain-openai
