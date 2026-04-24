@@ -1,0 +1,1246 @@
+{
+  "conversations": [
+    {
+      "conv_id": "conv_01",
+      "name": "Name & Language Preference",
+      "agent_type": "memory",
+      "turns": [
+        {
+          "conv_id": "conv_01",
+          "turn_idx": 0,
+          "agent_type": "memory",
+          "user_input": "My name is An and I prefer responses in Vietnamese.",
+          "response": "Chào An! Rất vui được trò chuyện với bạn. Bạn cần giúp gì hôm nay?",
+          "response_relevance": 1.0,
+          "context_utilization": 0,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "long_term",
+          "token_count": 97,
+          "latency_ms": 4375
+        },
+        {
+          "conv_id": "conv_01",
+          "turn_idx": 1,
+          "agent_type": "memory",
+          "user_input": "What programming languages do you recommend for a beginner?",
+          "response": "Đối với người mới bắt đầu, tôi khuyên bạn nên xem xét các ngôn ngữ lập trình sau:\n\n1. **Python**: Dễ học, cú pháp rõ ràng, và có nhiều ứng dụng từ phát triển web đến khoa học dữ liệu.\n2. **JavaScript**: Rất phổ biến cho phát triển web, giúp bạn tạo ra các trang web tương tác.\n3. **Ruby**: Cú pháp dễ đọc, thường được sử dụng trong phát triển web với Ruby on Rails.\n4. **Scratch**: Một ngôn ngữ lập trình trực quan, tuyệt vời cho trẻ em và người mới bắt đầu.\n\nBạn có quan tâm đến lĩnh vực nào cụ thể không?",
+          "response_relevance": 1.0,
+          "context_utilization": 1,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "short_term",
+          "token_count": 346,
+          "latency_ms": 4898
+        },
+        {
+          "conv_id": "conv_01",
+          "turn_idx": 2,
+          "agent_type": "memory",
+          "user_input": "What was my name again, and what language did I say I prefer?",
+          "response": "Tên của bạn là An, và bạn thích nhận phản hồi bằng tiếng Việt.",
+          "response_relevance": 0.5,
+          "context_utilization": 1,
+          "memory_hit_rate": 1.0,
+          "memory_hits": 2,
+          "memory_type": "long_term",
+          "token_count": 267,
+          "latency_ms": 2200
+        }
+      ],
+      "summary": {
+        "avg_relevance": 0.8333333333333334,
+        "avg_context_util": 0.6666666666666666,
+        "avg_memory_hit_rate": 0.3333333333333333,
+        "avg_tokens": 236.66666666666666,
+        "total_tokens": 710
+      }
+    },
+    {
+      "conv_id": "conv_01",
+      "name": "Name & Language Preference",
+      "agent_type": "baseline",
+      "turns": [
+        {
+          "conv_id": "conv_01",
+          "turn_idx": 0,
+          "agent_type": "baseline",
+          "user_input": "My name is An and I prefer responses in Vietnamese.",
+          "response": "Chào An! Rất vui được gặp bạn. Bạn cần giúp gì hôm nay?",
+          "response_relevance": 1.0,
+          "context_utilization": 0,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "none",
+          "token_count": 39,
+          "latency_ms": 1109
+        },
+        {
+          "conv_id": "conv_01",
+          "turn_idx": 1,
+          "agent_type": "baseline",
+          "user_input": "What programming languages do you recommend for a beginner?",
+          "response": "Chào An! Dưới đây là một số ngôn ngữ lập trình mà tôi khuyên bạn nên bắt đầu học nếu bạn là người mới:\n\n1. **Python**: Đây là ngôn ngữ rất phổ biến cho người mới bắt đầu vì cú pháp của nó đơn giản và dễ hiểu. Python cũng được sử dụng rộng rãi trong nhiều lĩnh vực như phát triển web, khoa học dữ liệu, trí tuệ nhân tạo và tự động hóa.\n\n2. **JavaScript**: Nếu bạn quan tâm đến phát triển web, JavaScript là ngôn ngữ không thể thiếu. Nó cho phép bạn tạo ra các trang web tương tác và là ngôn ngữ chính cho phát triển front-end.\n\n3. **Ruby**: Ruby có cú pháp dễ đọc và dễ viết, rất phù hợp cho người mới. Nó thường được sử dụng với framework Ruby on Rails để phát triển ứng dụng web.\n\n4. **Java**: Java là một ngôn ngữ lập trình mạnh mẽ và phổ biến, đặc biệt trong phát triển ứng dụng Android và các ứng dụng doanh nghiệp. Nó có cú pháp hơi phức tạp hơn nhưng rất hữu ích.\n\n5. **Scratch**: Nếu bạn hoàn toàn mới và muốn bắt đầu từ những điều cơ bản, Scratch là một ngôn ngữ lập trình trực quan giúp bạn hiểu các khái niệm lập trình mà không cần phải viết mã.\n\nBạn có thể chọn một trong số các ngôn ngữ trên tùy thuộc vào sở thích và mục tiêu của mình. Chúc bạn học lập trình vui vẻ!",
+          "response_relevance": 1.0,
+          "context_utilization": 0,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "none",
+          "token_count": 528,
+          "latency_ms": 4978
+        },
+        {
+          "conv_id": "conv_01",
+          "turn_idx": 2,
+          "agent_type": "baseline",
+          "user_input": "What was my name again, and what language did I say I prefer?",
+          "response": "Tên của bạn là An, và bạn đã nói rằng bạn thích nhận phản hồi bằng tiếng Việt.",
+          "response_relevance": 0.5,
+          "context_utilization": 0,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "none",
+          "token_count": 53,
+          "latency_ms": 717
+        }
+      ],
+      "summary": {
+        "avg_relevance": 0.8333333333333334,
+        "avg_context_util": 0.0,
+        "avg_memory_hit_rate": 0.0,
+        "avg_tokens": 206.66666666666666,
+        "total_tokens": 620
+      }
+    },
+    {
+      "conv_id": "conv_02",
+      "name": "Age & Health Fact Tracking",
+      "agent_type": "memory",
+      "turns": [
+        {
+          "conv_id": "conv_02",
+          "turn_idx": 0,
+          "agent_type": "memory",
+          "user_input": "I'm 28 years old and I have type 2 diabetes.",
+          "response": "Cảm ơn bạn đã chia sẻ, An. Nếu bạn cần thông tin hoặc lời khuyên về cách quản lý bệnh tiểu đường loại 2, tôi có thể giúp bạn. Bạn có muốn biết về chế độ ăn uống, tập luyện hay các phương pháp quản lý khác không?",
+          "response_relevance": 1.0,
+          "context_utilization": 1,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "short_term",
+          "token_count": 367,
+          "latency_ms": 2089
+        },
+        {
+          "conv_id": "conv_02",
+          "turn_idx": 1,
+          "agent_type": "memory",
+          "user_input": "What foods should I generally avoid?",
+          "response": "Đối với người mắc bệnh tiểu đường loại 2, bạn nên tránh những thực phẩm sau:\n\n1. **Đường và đồ ngọt**: Thức uống có đường, bánh kẹo, và các món tráng miệng có nhiều đường.\n2. **Thực phẩm chế biến sẵn**: Nhiều loại thực phẩm chế biến sẵn chứa nhiều đường và carbohydrate tinh chế.\n3. **Bánh mì trắng và gạo trắng**: Những thực phẩm này có chỉ số glycemic cao, có thể làm tăng đường huyết.\n4. **Thực phẩm chiên**: Chúng thường chứa nhiều chất béo không lành mạnh và calo.\n5. **Thức uống có ga**: Chúng chứa nhiều đường và không có giá trị dinh dưỡng.\n\nNếu bạn cần thêm thông tin hoặc gợi ý về chế độ ăn uống lành mạnh, hãy cho tôi biết nhé!",
+          "response_relevance": 1.0,
+          "context_utilization": 1,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "short_term",
+          "token_count": 597,
+          "latency_ms": 4855
+        },
+        {
+          "conv_id": "conv_02",
+          "turn_idx": 2,
+          "agent_type": "memory",
+          "user_input": "Given my age and condition, what exercise is safe?",
+          "response": "An, với tuổi 28 và tình trạng tiểu đường loại 2, bạn có thể thực hiện một số loại bài tập an toàn như:\n\n1. **Đi bộ**: Đây là một cách tuyệt vời để bắt đầu, giúp cải thiện sức khỏe tim mạch và kiểm soát đường huyết.\n2. **Bơi lội**: Bơi là một hoạt động nhẹ nhàng, tốt cho khớp và giúp tăng cường sức mạnh.\n3. **Yoga**: Giúp cải thiện sự linh hoạt và giảm căng thẳng, có thể hỗ trợ trong việc quản lý đường huyết.\n4. **Tập thể dục nhịp điệu nhẹ nhàng**: Như đạp xe hoặc đi bộ nhanh.\n\nTrước khi bắt đầu bất kỳ chương trình tập luyện nào, bạn nên tham khảo ý kiến bác sĩ để đảm bảo an toàn cho sức khỏe của mình.",
+          "response_relevance": 0.5,
+          "context_utilization": 1,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "short_term",
+          "token_count": 608,
+          "latency_ms": 5292
+        }
+      ],
+      "summary": {
+        "avg_relevance": 0.8333333333333334,
+        "avg_context_util": 1.0,
+        "avg_memory_hit_rate": 0.0,
+        "avg_tokens": 524.0,
+        "total_tokens": 1572
+      }
+    },
+    {
+      "conv_id": "conv_02",
+      "name": "Age & Health Fact Tracking",
+      "agent_type": "baseline",
+      "turns": [
+        {
+          "conv_id": "conv_02",
+          "turn_idx": 0,
+          "agent_type": "baseline",
+          "user_input": "I'm 28 years old and I have type 2 diabetes.",
+          "response": "It's important to manage type 2 diabetes effectively to maintain your health and prevent complications. Here are some general tips that might help you:\n\n1. **Diet**: Focus on a balanced diet that includes whole grains, lean proteins, healthy fats, and plenty of fruits and vegetables. Monitor your carbohydrate intake and consider working with a dietitian to create a meal plan that suits your needs.\n\n2. **Physical Activity**: Regular exercise can help improve insulin sensitivity and lower blood sugar levels. Aim for at least 150 minutes of moderate aerobic activity each week, along with strength training exercises.\n\n3. **Monitor Blood Sugar Levels**: Regularly check your blood sugar levels to understand how different foods and activities affect your diabetes. This can help you make informed decisions about your diet and lifestyle.\n\n4. **Medications**: If prescribed, take your diabetes medications as directed by your healthcare provider. Discuss any concerns or side effects with them.\n\n5. **Weight Management**: If you're overweight, losing even a small amount of weight can improve your blood sugar control. Focus on gradual, sustainable changes rather than quick fixes.\n\n6. **Stay Hydrated**: Drink plenty of water throughout the day, as staying hydrated is important for overall health.\n\n7. **Regular Check-ups**: Keep up with regular medical appointments to monitor your diabetes and check for any complications. This includes eye exams, foot exams, and blood pressure checks.\n\n8. **Stress Management**: High stress can affect blood sugar levels. Consider stress-reducing techniques such as mindfulness, meditation, or yoga.\n\n9. **Education**: Stay informed about diabetes management. Understanding your condition can empower you to make better choices.\n\n10. **Support**: Consider joining a diabetes support group or connecting with others who have diabetes. Sharing experiences and tips can be very helpful.\n\nAlways consult with your healthcare provider before making significant changes to your diet, exercise routine, or medication. They can provide personalized advice based on your specific situation.",
+          "response_relevance": 1.0,
+          "context_utilization": 0,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "none",
+          "token_count": 407,
+          "latency_ms": 7191
+        },
+        {
+          "conv_id": "conv_02",
+          "turn_idx": 1,
+          "agent_type": "baseline",
+          "user_input": "What foods should I generally avoid?",
+          "response": "If you have type 2 diabetes, it's important to manage your diet to help control blood sugar levels. Here are some foods you should generally avoid or limit:\n\n1. **Sugary Foods and Beverages**: This includes soda, fruit juices, candy, pastries, and desserts. These can cause rapid spikes in blood sugar.\n\n2. **Refined Carbohydrates**: Foods made with white flour, such as white bread, pasta, and many baked goods, can lead to increased blood sugar levels.\n\n3. **High-Glycemic Index Foods**: Foods that quickly raise blood sugar levels, such as white rice, potatoes, and certain cereals, should be consumed in moderation.\n\n4. **Trans Fats**: Found in many fried foods, baked goods, and processed snacks, trans fats can increase the risk of heart disease, which is already a concern for people with diabetes.\n\n5. **Full-Fat Dairy Products**: High-fat dairy can contribute to insulin resistance. Opt for low-fat or non-fat versions instead.\n\n6. **Fatty Cuts of Meat**: Processed meats and fatty cuts can be high in saturated fats, which can worsen insulin sensitivity.\n\n7. **High-Sodium Foods**: Processed foods, canned soups, and fast foods can be high in sodium, which can increase blood pressure and risk of heart disease.\n\n8. **Alcohol**: While moderate consumption may be acceptable for some, alcohol can affect blood sugar levels and should be consumed with caution.\n\n9. **High-Calorie Snacks**: Chips, cookies, and other snack foods can lead to weight gain and poor blood sugar control.\n\n10. **Certain Fruits**: While fruits are healthy, some have high sugar content. Be cautious with fruits like bananas, grapes, and pineapples, and consider portion sizes.\n\nIt's also important to focus on a balanced diet that includes whole grains, lean proteins, healthy fats, and plenty of vegetables. Always consult with a healthcare provider or a registered dietitian for personalized advice tailored to your specific health needs.",
+          "response_relevance": 1.0,
+          "context_utilization": 0,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "none",
+          "token_count": 421,
+          "latency_ms": 4590
+        },
+        {
+          "conv_id": "conv_02",
+          "turn_idx": 2,
+          "agent_type": "baseline",
+          "user_input": "Given my age and condition, what exercise is safe?",
+          "response": "Managing type 2 diabetes involves both dietary choices and physical activity. Here are some general guidelines for foods to avoid and safe exercises:\n\n### Foods to Avoid:\n1. **Sugary Beverages**: Sodas, sweetened teas, and energy drinks can cause spikes in blood sugar.\n2. **White Bread and Pasta**: Refined carbohydrates can raise blood sugar levels quickly.\n3. **Full-Fat Dairy Products**: High in saturated fats, which can increase insulin resistance.\n4. **Fried Foods**: High in unhealthy fats and calories, which can contribute to weight gain and insulin resistance.\n5. **Processed Snacks**: Chips, cookies, and other snacks often contain added sugars and unhealthy fats.\n6. **High-Sugar Foods**: Candy, desserts, and other sweets can lead to rapid increases in blood sugar.\n7. **Certain Sauces and Condiments**: Ketchup, barbecue sauce, and some salad dressings can contain added sugars.\n8. **High-Glycemic Index Foods**: Foods that cause rapid increases in blood sugar, such as white rice and certain cereals.\n\n### Safe Exercises:\n1. **Walking**: A low-impact exercise that can be easily incorporated into your daily routine.\n2. **Cycling**: Whether on a stationary bike or outdoors, cycling is gentle on the joints and effective for cardiovascular health.\n3. **Swimming**: A great full-body workout that is easy on the joints and helps improve cardiovascular fitness.\n4. **Strength Training**: Light weights or resistance bands can help build muscle, which can improve insulin sensitivity.\n5. **Yoga**: Can improve flexibility, reduce stress, and promote overall well-being.\n6. **Group Classes**: Consider classes like Pilates or low-impact aerobics, which can provide structure and motivation.\n\n### Important Considerations:\n- **Consult Your Healthcare Provider**: Before starting any new diet or exercise program, it's important to consult with your healthcare provider or a registered dietitian, especially considering your diabetes.\n- **Monitor Blood Sugar Levels**: Keep track of how your body responds to different foods and exercises, and adjust accordingly.\n- **Start Slowly**: If you're new to exercise, start with short sessions and gradually increase duration and intensity.\n\nMaintaining a balanced diet and regular physical activity can help manage your diabetes effectively.",
+          "response_relevance": 0.5,
+          "context_utilization": 0,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "none",
+          "token_count": 477,
+          "latency_ms": 6315
+        }
+      ],
+      "summary": {
+        "avg_relevance": 0.8333333333333334,
+        "avg_context_util": 0.0,
+        "avg_memory_hit_rate": 0.0,
+        "avg_tokens": 435.0,
+        "total_tokens": 1305
+      }
+    },
+    {
+      "conv_id": "conv_03",
+      "name": "Professional Context Recall",
+      "agent_type": "memory",
+      "turns": [
+        {
+          "conv_id": "conv_03",
+          "turn_idx": 0,
+          "agent_type": "memory",
+          "user_input": "I work as a data scientist at a healthcare startup.",
+          "response": "Thật tuyệt vời, An! Làm việc trong lĩnh vực khoa học dữ liệu tại một startup chăm sóc sức khỏe chắc chắn mang lại nhiều cơ hội thú vị. Bạn có đang tham gia vào dự án nào đặc biệt không?",
+          "response_relevance": 1.0,
+          "context_utilization": 1,
+          "memory_hit_rate": 1.0,
+          "memory_hits": 3,
+          "memory_type": "semantic",
+          "token_count": 568,
+          "latency_ms": 3728
+        },
+        {
+          "conv_id": "conv_03",
+          "turn_idx": 1,
+          "agent_type": "memory",
+          "user_input": "What Python libraries are most relevant to my field?",
+          "response": "As a data scientist in the healthcare startup sector, several Python libraries are particularly relevant for your work:\n\n1. **Pandas**: For data manipulation and analysis, especially with structured data.\n2. **NumPy**: For numerical computations and handling arrays.\n3. **SciPy**: For scientific computing and technical computing tasks.\n4. **Scikit-learn**: For machine learning algorithms and model evaluation.\n5. **TensorFlow or PyTorch**: If you're working with deep learning models.\n6. **Matplotlib and Seaborn**: For data visualization to help present your findings.\n7. **Statsmodels**: For statistical modeling and hypothesis testing, which can be particularly useful in healthcare data analysis.\n\nThese libraries will help you analyze data effectively and build predictive models relevant to healthcare. If you have any specific projects in mind, I can suggest more tailored tools!",
+          "response_relevance": 1.0,
+          "context_utilization": 1,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "short_term",
+          "token_count": 512,
+          "latency_ms": 3964
+        },
+        {
+          "conv_id": "conv_03",
+          "turn_idx": 2,
+          "agent_type": "memory",
+          "user_input": "Earlier I mentioned my job – can you recall what I do?",
+          "response": "Yes, An! You work as a data scientist at a healthcare startup. How's it going in your role?",
+          "response_relevance": 1.0,
+          "context_utilization": 1,
+          "memory_hit_rate": 1.0,
+          "memory_hits": 5,
+          "memory_type": "episodic",
+          "token_count": 614,
+          "latency_ms": 3045
+        }
+      ],
+      "summary": {
+        "avg_relevance": 1.0,
+        "avg_context_util": 1.0,
+        "avg_memory_hit_rate": 0.6666666666666666,
+        "avg_tokens": 564.6666666666666,
+        "total_tokens": 1694
+      }
+    },
+    {
+      "conv_id": "conv_03",
+      "name": "Professional Context Recall",
+      "agent_type": "baseline",
+      "turns": [
+        {
+          "conv_id": "conv_03",
+          "turn_idx": 0,
+          "agent_type": "baseline",
+          "user_input": "I work as a data scientist at a healthcare startup.",
+          "response": "That sounds exciting! Working as a data scientist in a healthcare startup can be both challenging and rewarding. You likely have the opportunity to work with large datasets, develop predictive models, and contribute to improving patient outcomes or operational efficiencies. What specific projects or areas are you focusing on in your role?",
+          "response_relevance": 1.0,
+          "context_utilization": 0,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "none",
+          "token_count": 68,
+          "latency_ms": 1599
+        },
+        {
+          "conv_id": "conv_03",
+          "turn_idx": 1,
+          "agent_type": "baseline",
+          "user_input": "What Python libraries are most relevant to my field?",
+          "response": "As a data scientist in the healthcare field, there are several Python libraries that are particularly relevant for data analysis, machine learning, and data visualization. Here are some of the most important ones:\n\n### Data Manipulation and Analysis\n1. **Pandas**: Essential for data manipulation and analysis. It provides data structures like DataFrames that are perfect for handling structured data.\n2. **NumPy**: Useful for numerical computations and handling arrays. It provides support for large, multi-dimensional arrays and matrices.\n\n### Data Visualization\n3. **Matplotlib**: A versatile library for creating static, animated, and interactive visualizations in Python.\n4. **Seaborn**: Built on top of Matplotlib, it provides a high-level interface for drawing attractive statistical graphics.\n5. **Plotly**: Great for creating interactive plots and dashboards. It can be particularly useful for web applications.\n\n### Machine Learning\n6. **Scikit-learn**: A comprehensive library for machine learning that includes tools for classification, regression, clustering, and more.\n7. **TensorFlow**: An open-source framework for deep learning that is widely used in various applications, including healthcare.\n8. **Keras**: A high-level neural networks API that runs on top of TensorFlow, making it easier to build and train deep learning models.\n9. **PyTorch**: Another popular deep learning library that is known for its flexibility and ease of use, especially in research settings.\n\n### Natural Language Processing (NLP)\n10. **NLTK**: The Natural Language Toolkit is useful for working with human language data (text).\n11. **spaCy**: An efficient library for NLP tasks, including named entity recognition and part-of-speech tagging.\n12. **Transformers (by Hugging Face)**: A library for state-of-the-art NLP models, including BERT and GPT, which can be useful for tasks like clinical text analysis.\n\n### Statistical Analysis\n13. **SciPy**: Builds on NumPy and provides additional functionality for scientific and technical computing, including statistical functions.\n14. **Statsmodels**: Useful for estimating and interpreting statistical models, particularly in the context of healthcare data analysis.\n\n### Data Handling and Storage\n15. **SQLAlchemy**: A SQL toolkit and Object-Relational Mapping (ORM) system for working with databases.\n16. **Dask**: For parallel computing and handling large datasets that don't fit into memory.\n\n### Healthcare-Specific Libraries\n17. **Lifelines**: A library for survival analysis, which is often relevant in healthcare studies.\n18. **PyHealthcare**: A library that can be useful for working with healthcare datasets, though it may not be as widely used as others.\n\n### Additional Tools\n19. **Jupyter Notebook**: While not a library, it's an essential tool for interactive data analysis and sharing results.\n20. **Dash**: A framework for building analytical web applications, great for visualizing healthcare data interactively.\n\nThese libraries can help you with various tasks, from data cleaning and preprocessing to building predictive models and visualizing results. Depending on your specific projects and needs, you may find some libraries more useful than others.",
+          "response_relevance": 1.0,
+          "context_utilization": 0,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "none",
+          "token_count": 643,
+          "latency_ms": 9966
+        },
+        {
+          "conv_id": "conv_03",
+          "turn_idx": 2,
+          "agent_type": "baseline",
+          "user_input": "Earlier I mentioned my job – can you recall what I do?",
+          "response": "Yes, you mentioned that you work as a data scientist at a healthcare startup. In that context, here are some Python libraries that are particularly relevant to your field:\n\n1. **Pandas**: Essential for data manipulation and analysis, especially for handling structured data.\n\n2. **NumPy**: Useful for numerical computations and handling arrays, which is fundamental in data analysis.\n\n3. **SciPy**: Provides additional functionality for scientific and technical computing, including optimization, integration, and statistics.\n\n4. **Scikit-learn**: A powerful library for machine learning that includes tools for classification, regression, clustering, and more.\n\n5. **TensorFlow / Keras**: Libraries for deep learning that can be used for tasks such as image analysis (e.g., medical imaging) and natural language processing.\n\n6. **PyTorch**: Another deep learning library that is popular for research and production, especially in healthcare applications.\n\n7. **Statsmodels**: Useful for statistical modeling and hypothesis testing, which can be important in healthcare research.\n\n8. **Matplotlib / Seaborn**: Libraries for data visualization that help in presenting data insights effectively.\n\n9. **NLTK / SpaCy**: Libraries for natural language processing, which can be useful if you're working with unstructured data like clinical notes or patient feedback.\n\n10. **Dask**: For parallel computing and handling large datasets that don't fit into memory.\n\n11. **BioPython**: Specifically for bioinformatics, useful if your startup deals with genomic data or biological computations.\n\n12. **Lifelines**: A library for survival analysis, which is often relevant in healthcare studies.\n\nThese libraries can help you analyze data, build predictive models, and visualize results effectively in your healthcare-related projects.",
+          "response_relevance": 1.0,
+          "context_utilization": 0,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "none",
+          "token_count": 359,
+          "latency_ms": 5554
+        }
+      ],
+      "summary": {
+        "avg_relevance": 1.0,
+        "avg_context_util": 0.0,
+        "avg_memory_hit_rate": 0.0,
+        "avg_tokens": 356.6666666666667,
+        "total_tokens": 1070
+      }
+    },
+    {
+      "conv_id": "conv_04",
+      "name": "Learning Style Preferences",
+      "agent_type": "memory",
+      "turns": [
+        {
+          "conv_id": "conv_04",
+          "turn_idx": 0,
+          "agent_type": "memory",
+          "user_input": "I prefer learning through hands-on projects rather than reading theory.",
+          "response": "Got it, An! Hands-on projects are a great way to learn, especially in data science. If you're looking for project ideas, I can suggest some that are relevant to healthcare. Would you like that?",
+          "response_relevance": 1.0,
+          "context_utilization": 1,
+          "memory_hit_rate": 1.0,
+          "memory_hits": 4,
+          "memory_type": "long_term",
+          "token_count": 343,
+          "latency_ms": 2270
+        },
+        {
+          "conv_id": "conv_04",
+          "turn_idx": 1,
+          "agent_type": "memory",
+          "user_input": "How should I approach learning machine learning?",
+          "response": "Since you prefer hands-on projects, I recommend the following approach to learning machine learning:\n\n1. **Start with Practical Projects**: Choose simple projects that interest you, like predicting healthcare outcomes using datasets available on platforms like Kaggle.\n\n2. **Utilize Libraries**: Get familiar with libraries like Scikit-learn for building models, and TensorFlow or PyTorch for more advanced projects.\n\n3. **Online Courses**: Consider courses that emphasize practical applications, such as those on Coursera or Udacity, which often include project-based learning.\n\n4. **Join a Community**: Engage with online forums or local meetups focused on machine learning to share your projects and learn from others.\n\n5. **Iterate and Experiment**: Don’t hesitate to try different algorithms and techniques. Experimentation is key to understanding how machine learning works.\n\nIf you need specific project ideas or resources, just let me know!",
+          "response_relevance": 1.0,
+          "context_utilization": 1,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "short_term",
+          "token_count": 389,
+          "latency_ms": 4629
+        },
+        {
+          "conv_id": "conv_04",
+          "turn_idx": 2,
+          "agent_type": "memory",
+          "user_input": "Remind me – what learning style did I say I prefer?",
+          "response": "You mentioned that you prefer learning through hands-on projects rather than reading theory.",
+          "response_relevance": 1.0,
+          "context_utilization": 1,
+          "memory_hit_rate": 1.0,
+          "memory_hits": 4,
+          "memory_type": "long_term",
+          "token_count": 271,
+          "latency_ms": 2354
+        }
+      ],
+      "summary": {
+        "avg_relevance": 1.0,
+        "avg_context_util": 1.0,
+        "avg_memory_hit_rate": 0.6666666666666666,
+        "avg_tokens": 334.3333333333333,
+        "total_tokens": 1003
+      }
+    },
+    {
+      "conv_id": "conv_04",
+      "name": "Learning Style Preferences",
+      "agent_type": "baseline",
+      "turns": [
+        {
+          "conv_id": "conv_04",
+          "turn_idx": 0,
+          "agent_type": "baseline",
+          "user_input": "I prefer learning through hands-on projects rather than reading theory.",
+          "response": "That's a great approach! Hands-on projects can enhance understanding and retention of concepts. Here are some project ideas across various fields that you might find engaging:\n\n### Programming\n1. **Build a Personal Website**: Create a portfolio site using HTML, CSS, and JavaScript. You can showcase your projects and skills.\n2. **Create a Simple Game**: Use a game development platform like Unity or Godot to build a basic 2D game.\n3. **Develop a To-Do List App**: Use a framework like React, Vue, or Angular to create a web app that allows users to manage tasks.\n\n### Electronics\n1. **Arduino Projects**: Start with simple projects like a temperature sensor or LED light control, then progress to more complex projects like a weather station.\n2. **Raspberry Pi Media Center**: Set up a Raspberry Pi to create a home media center using software like Kodi.\n\n### Data Science\n1. **Data Analysis Project**: Use a dataset from Kaggle to analyze trends and visualize data using Python libraries like Pandas and Matplotlib.\n2. **Build a Machine Learning Model**: Start with a simple model using Scikit-learn to predict outcomes based on a dataset.\n\n### Web Development\n1. **Create a Blog**: Use a CMS like WordPress or build your own using a framework like Django or Flask.\n2. **E-commerce Site**: Develop a small e-commerce site with product listings, a shopping cart, and payment integration.\n\n### Mobile Development\n1. **Build a Simple Mobile App**: Use Flutter or React Native to create a cross-platform mobile app, such as a weather app or a recipe book.\n2. **Game Development**: Create a simple mobile game using Unity or another game development framework.\n\n### Robotics\n1. **Build a Line Following Robot**: Use sensors and a microcontroller to create a robot that follows a line.\n2. **Remote-Controlled Car**: Modify a toy car to be controlled via a smartphone or computer.\n\n### Art and Design\n1. **Digital Art Project**: Use software like Adobe Illustrator or Procreate to create a series of digital illustrations.\n2. **3D Modeling**: Learn Blender by creating a 3D model of an object or character.\n\n### DIY Projects\n1. **Home Automation**: Use smart devices and platforms like Home Assistant to automate tasks in your home.\n2. **Furniture Restoration**: Find an old piece of furniture and restore or upcycle it.\n\n### Community Projects\n1. **Volunteer for a Local Non-Profit**: Help them with their website, social media, or data management.\n2. **Organize a Workshop**: Teach a skill you know to others in your community.\n\nChoose a project that excites you, and don't hesitate to explore and experiment as you go along. If you need guidance on any specific project, feel free to ask!",
+          "response_relevance": 1.0,
+          "context_utilization": 0,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "none",
+          "token_count": 585,
+          "latency_ms": 8685
+        },
+        {
+          "conv_id": "conv_04",
+          "turn_idx": 1,
+          "agent_type": "baseline",
+          "user_input": "How should I approach learning machine learning?",
+          "response": "Learning machine learning through hands-on projects is a great approach! Here’s a structured way to get started:\n\n### 1. **Set Up Your Environment**\n   - **Programming Language**: Python is the most popular language for machine learning. Make sure you have Python installed.\n   - **Libraries**: Familiarize yourself with key libraries like:\n     - **NumPy**: For numerical operations.\n     - **Pandas**: For data manipulation and analysis.\n     - **Matplotlib/Seaborn**: For data visualization.\n     - **Scikit-learn**: For basic machine learning algorithms.\n     - **TensorFlow/PyTorch**: For deep learning.\n\n### 2. **Start with Simple Projects**\n   - **Project Ideas**:\n     - **Iris Dataset**: Classify iris flowers based on their features using Scikit-learn.\n     - **Titanic Survival Prediction**: Use the Titanic dataset to predict survival using logistic regression.\n     - **Handwritten Digit Recognition**: Use the MNIST dataset to classify handwritten digits with a simple neural network.\n\n### 3. **Follow Online Tutorials**\n   - Look for project-based tutorials on platforms like:\n     - **Kaggle**: Participate in competitions and work on datasets.\n     - **Coursera/Udacity**: Courses that include hands-on projects.\n     - **YouTube**: Channels dedicated to machine learning projects.\n\n### 4. **Build Your Own Projects**\n   - Choose a domain of interest (e.g., healthcare, finance, sports) and find datasets on platforms like Kaggle, UCI Machine Learning Repository, or Google Dataset Search.\n   - Define a problem you want to solve and outline your approach.\n   - Implement your solution step-by-step, starting with data preprocessing, then model selection, training, and evaluation.\n\n### 5. **Explore Advanced Topics**\n   - Once you’re comfortable with basic projects, explore more complex topics:\n     - **Deep Learning**: Build neural networks using TensorFlow or PyTorch.\n     - **Natural Language Processing**: Work on text classification or sentiment analysis.\n     - **Computer Vision**: Try image classification or object detection.\n\n### 6. **Collaborate and Share**\n   - Join online communities (like GitHub, Kaggle, or Reddit) to share your projects and get feedback.\n   - Collaborate with others on projects to learn different approaches and techniques.\n\n### 7. **Document Your Work**\n   - Keep a portfolio of your projects on GitHub or a personal website.\n   - Write blog posts or create videos explaining your projects and what you learned.\n\n### 8. **Stay Updated**\n   - Follow machine learning blogs, podcasts, and research papers to stay current with the latest trends and techniques.\n\n### 9. **Iterate and Improve**\n   - After completing projects, revisit them to improve your models or apply new techniques you’ve learned.\n   - Experiment with different algorithms, hyperparameters, and feature engineering.\n\n### 10. **Practice Regularly**\n   - Consistency is key. Dedicate time each week to work on projects, learn new concepts, and practice coding.\n\nBy focusing on hands-on projects, you'll gain practical experience that will reinforce your understanding of machine learning concepts. Enjoy the learning journey!",
+          "response_relevance": 1.0,
+          "context_utilization": 0,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "none",
+          "token_count": 663,
+          "latency_ms": 8508
+        },
+        {
+          "conv_id": "conv_04",
+          "turn_idx": 2,
+          "agent_type": "baseline",
+          "user_input": "Remind me – what learning style did I say I prefer?",
+          "response": "You mentioned that you prefer learning through hands-on projects rather than reading theory.",
+          "response_relevance": 1.0,
+          "context_utilization": 0,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "none",
+          "token_count": 28,
+          "latency_ms": 788
+        }
+      ],
+      "summary": {
+        "avg_relevance": 1.0,
+        "avg_context_util": 0.0,
+        "avg_memory_hit_rate": 0.0,
+        "avg_tokens": 425.3333333333333,
+        "total_tokens": 1276
+      }
+    },
+    {
+      "conv_id": "conv_05",
+      "name": "Topic Continuity",
+      "agent_type": "memory",
+      "turns": [
+        {
+          "conv_id": "conv_05",
+          "turn_idx": 0,
+          "agent_type": "memory",
+          "user_input": "Let's talk about LangGraph. It's a framework for building stateful agents.",
+          "response": "LangGraph sounds interesting! It’s great for creating stateful agents that can manage complex interactions and maintain context over time. Are you looking to explore its features, or do you have specific questions about how to use it?",
+          "response_relevance": 1.0,
+          "context_utilization": 1,
+          "memory_hit_rate": 1.0,
+          "memory_hits": 3,
+          "memory_type": "semantic",
+          "token_count": 331,
+          "latency_ms": 3240
+        },
+        {
+          "conv_id": "conv_05",
+          "turn_idx": 1,
+          "agent_type": "memory",
+          "user_input": "What are the key components of such agents?",
+          "response": "Key components of stateful agents in frameworks like LangGraph typically include:\n\n1. **State Management**: This allows the agent to maintain context and remember past interactions, which is crucial for coherent conversations.\n\n2. **Action Handlers**: These define how the agent responds to various inputs or triggers, enabling it to perform specific tasks or actions.\n\n3. **Input Processing**: This component interprets user inputs, often using natural language processing (NLP) techniques to understand intent and context.\n\n4. **Output Generation**: This involves crafting responses or actions based on the processed input and the current state of the agent.\n\n5. **Memory**: A mechanism to store and retrieve information that the agent has learned or been told, enhancing its ability to provide personalized interactions.\n\n6. **Learning Mechanism**: Some agents incorporate machine learning to improve their responses over time based on user interactions.\n\nAre you looking to implement any specific features or components in your project with LangGraph?",
+          "response_relevance": 1.0,
+          "context_utilization": 1,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "short_term",
+          "token_count": 386,
+          "latency_ms": 15718
+        },
+        {
+          "conv_id": "conv_05",
+          "turn_idx": 2,
+          "agent_type": "memory",
+          "user_input": "What topic did we start this conversation with?",
+          "response": "We started this conversation discussing LangGraph, a framework for building stateful agents. If you have more questions or want to dive deeper into its features, feel free to ask!",
+          "response_relevance": 1.0,
+          "context_utilization": 1,
+          "memory_hit_rate": 1.0,
+          "memory_hits": 3,
+          "memory_type": "semantic",
+          "token_count": 308,
+          "latency_ms": 2686
+        }
+      ],
+      "summary": {
+        "avg_relevance": 1.0,
+        "avg_context_util": 1.0,
+        "avg_memory_hit_rate": 0.6666666666666666,
+        "avg_tokens": 341.6666666666667,
+        "total_tokens": 1025
+      }
+    },
+    {
+      "conv_id": "conv_05",
+      "name": "Topic Continuity",
+      "agent_type": "baseline",
+      "turns": [
+        {
+          "conv_id": "conv_05",
+          "turn_idx": 0,
+          "agent_type": "baseline",
+          "user_input": "Let's talk about LangGraph. It's a framework for building stateful agents.",
+          "response": "LangGraph is an innovative framework designed for creating stateful agents, particularly in the context of natural language processing and artificial intelligence. It allows developers to build agents that can maintain context and state over interactions, making them more effective in understanding and responding to user inputs.\n\n### Key Features of LangGraph:\n\n1. **State Management**: LangGraph provides mechanisms to manage the state of the agent, allowing it to remember previous interactions and maintain context over time. This is crucial for applications like chatbots, virtual assistants, and interactive storytelling.\n\n2. **Graph-Based Structure**: The framework often utilizes a graph-based architecture, where nodes represent different states or actions, and edges define the transitions between these states. This structure can help visualize and manage complex interactions.\n\n3. **Natural Language Understanding**: LangGraph is typically integrated with natural language processing capabilities, enabling the agent to understand and generate human-like responses. This can involve using pre-trained language models or custom NLP pipelines.\n\n4. **Modularity**: The framework is designed to be modular, allowing developers to easily add or modify components. This flexibility can facilitate rapid prototyping and iteration.\n\n5. **Integration with Other Tools**: LangGraph can often be integrated with various APIs, databases, and other tools, enabling agents to perform a wide range of tasks, from retrieving information to executing commands.\n\n6. **User-Centric Design**: The framework emphasizes creating user-friendly interactions, ensuring that agents can engage users effectively and provide meaningful responses.\n\n### Use Cases:\n\n- **Chatbots**: Building conversational agents that can handle customer inquiries, provide support, or engage users in dialogue.\n- **Personal Assistants**: Creating virtual assistants that can manage schedules, set reminders, or perform tasks based on user commands.\n- **Interactive Storytelling**: Developing applications that allow users to navigate through stories or scenarios based on their choices and interactions.\n\n### Getting Started:\n\nTo get started with LangGraph, developers typically need to:\n\n1. **Install the Framework**: Follow the installation instructions provided in the documentation.\n2. **Define the Agent's State and Actions**: Create a graph structure that outlines the states and possible transitions.\n3. **Implement Natural Language Processing**: Integrate NLP capabilities to enable the agent to understand user inputs.\n4. **Test and Iterate**: Continuously test the agent's performance and refine its responses and state management.\n\nIf you have specific questions about LangGraph or want to explore a particular aspect of it, feel free to ask!",
+          "response_relevance": 1.0,
+          "context_utilization": 0,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "none",
+          "token_count": 509,
+          "latency_ms": 7307
+        },
+        {
+          "conv_id": "conv_05",
+          "turn_idx": 1,
+          "agent_type": "baseline",
+          "user_input": "What are the key components of such agents?",
+          "response": "LangGraph, as a framework for building stateful agents, typically includes several key components that work together to enable the creation of intelligent systems capable of interacting with users and managing state effectively. Here are the primary components:\n\n1. **State Management**: This component is responsible for maintaining the internal state of the agent. It tracks information about past interactions, user preferences, and any relevant context that influences the agent's behavior.\n\n2. **Language Processing**: This involves natural language understanding (NLU) and natural language generation (NLG). The agent needs to interpret user inputs and generate appropriate responses. This may include parsing user queries, understanding intent, and formulating coherent replies.\n\n3. **Action Execution**: Agents often need to perform actions based on user requests or internal logic. This component handles the execution of actions, which could involve querying databases, calling APIs, or performing computations.\n\n4. **Dialogue Management**: This component manages the flow of conversation, determining how the agent should respond based on the current state and the user's input. It may involve maintaining context over multiple turns of dialogue.\n\n5. **Knowledge Base**: A repository of information that the agent can reference to provide accurate answers or perform tasks. This could include structured data, unstructured text, or even external APIs.\n\n6. **Learning and Adaptation**: Many stateful agents incorporate mechanisms for learning from interactions. This could involve updating the knowledge base, refining language models, or adjusting state management strategies based on user feedback.\n\n7. **User Interface**: The way users interact with the agent, which could be through text, voice, or other modalities. The UI component is crucial for ensuring a seamless user experience.\n\n8. **Integration Layer**: This allows the agent to connect with external systems, services, or databases, enabling it to fetch data, perform actions, or integrate with other applications.\n\n9. **Logging and Analytics**: To improve the agent over time, logging interactions and analyzing user behavior can provide insights into performance and areas for enhancement.\n\n10. **Security and Privacy**: Ensuring that user data is handled securely and in compliance with privacy regulations is essential for building trust and maintaining user engagement.\n\nThese components work together to create a cohesive system that can manage state, understand user input, and provide meaningful responses, making LangGraph a powerful tool for developing stateful agents.",
+          "response_relevance": 1.0,
+          "context_utilization": 0,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "none",
+          "token_count": 476,
+          "latency_ms": 6942
+        },
+        {
+          "conv_id": "conv_05",
+          "turn_idx": 2,
+          "agent_type": "baseline",
+          "user_input": "What topic did we start this conversation with?",
+          "response": "We started the conversation discussing LangGraph, a framework for building stateful agents.",
+          "response_relevance": 1.0,
+          "context_utilization": 0,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "none",
+          "token_count": 25,
+          "latency_ms": 647
+        }
+      ],
+      "summary": {
+        "avg_relevance": 1.0,
+        "avg_context_util": 0.0,
+        "avg_memory_hit_rate": 0.0,
+        "avg_tokens": 336.6666666666667,
+        "total_tokens": 1010
+      }
+    },
+    {
+      "conv_id": "conv_06",
+      "name": "Multi-fact Retention",
+      "agent_type": "memory",
+      "turns": [
+        {
+          "conv_id": "conv_06",
+          "turn_idx": 0,
+          "agent_type": "memory",
+          "user_input": "My cat's name is Mochi and she's 3 years old.",
+          "response": "That's adorable! Mochi is a cute name for a cat. How does she like to spend her time?",
+          "response_relevance": 1.0,
+          "context_utilization": 1,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "short_term",
+          "token_count": 238,
+          "latency_ms": 1632
+        },
+        {
+          "conv_id": "conv_06",
+          "turn_idx": 1,
+          "agent_type": "memory",
+          "user_input": "What are common health issues for indoor cats?",
+          "response": "Indoor cats can face several common health issues, including:\n\n1. **Obesity**: Lack of exercise can lead to weight gain, which can cause various health problems.\n2. **Dental Disease**: Indoor cats may develop dental issues due to plaque buildup and lack of natural wear on their teeth.\n3. **Urinary Tract Issues**: Conditions like urinary tract infections or blockages can occur, especially in males.\n4. **Behavioral Problems**: Boredom and lack of stimulation can lead to behavioral issues like aggression or anxiety.\n5. **Diabetes**: Indoor cats are at a higher risk of developing diabetes, often related to obesity.\n\nRegular vet check-ups and a balanced diet can help prevent these issues. How is Mochi doing with her health?",
+          "response_relevance": 1.0,
+          "context_utilization": 1,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "short_term",
+          "token_count": 356,
+          "latency_ms": 3529
+        },
+        {
+          "conv_id": "conv_06",
+          "turn_idx": 2,
+          "agent_type": "memory",
+          "user_input": "What's my cat's name and age?",
+          "response": "Your cat's name is Mochi, and she's 3 years old! How is she doing?",
+          "response_relevance": 1.0,
+          "context_utilization": 1,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "short_term",
+          "token_count": 229,
+          "latency_ms": 2300
+        }
+      ],
+      "summary": {
+        "avg_relevance": 1.0,
+        "avg_context_util": 1.0,
+        "avg_memory_hit_rate": 0.0,
+        "avg_tokens": 274.3333333333333,
+        "total_tokens": 823
+      }
+    },
+    {
+      "conv_id": "conv_06",
+      "name": "Multi-fact Retention",
+      "agent_type": "baseline",
+      "turns": [
+        {
+          "conv_id": "conv_06",
+          "turn_idx": 0,
+          "agent_type": "baseline",
+          "user_input": "My cat's name is Mochi and she's 3 years old.",
+          "response": "That's a cute name! Mochi must be a delightful companion. What kind of cat is she, and what are some of her favorite activities?",
+          "response_relevance": 1.0,
+          "context_utilization": 0,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "none",
+          "token_count": 46,
+          "latency_ms": 1197
+        },
+        {
+          "conv_id": "conv_06",
+          "turn_idx": 1,
+          "agent_type": "baseline",
+          "user_input": "What are common health issues for indoor cats?",
+          "response": "Indoor cats can experience a variety of health issues, some of which are specific to their lifestyle. Here are some common health concerns for indoor cats:\n\n1. **Obesity**: Indoor cats may lead a more sedentary lifestyle, which can lead to weight gain and obesity. This can result in diabetes, joint problems, and other health issues.\n\n2. **Dental Disease**: Dental problems, such as periodontal disease, are common in indoor cats due to a lack of natural wear on their teeth. Regular dental care is important.\n\n3. **Urinary Tract Issues**: Indoor cats may be prone to urinary tract infections and blockages, especially if they are not drinking enough water or are eating a dry food diet.\n\n4. **Behavioral Issues**: Lack of stimulation can lead to behavioral problems such as anxiety, aggression, or litter box issues. Providing enrichment and playtime is essential.\n\n5. **Hairballs**: Indoor cats may groom themselves more frequently, leading to hairballs, which can cause gastrointestinal issues.\n\n6. **Chronic Conditions**: Conditions such as hyperthyroidism, kidney disease, and arthritis can develop as cats age, even if they are kept indoors.\n\n7. **Parasites**: While indoor cats are less exposed to parasites like fleas and ticks, they can still be affected, especially if they come into contact with other animals or contaminated items.\n\n8. **Respiratory Issues**: Indoor cats can be susceptible to respiratory problems due to allergens, dust, or smoke in the home environment.\n\n9. **Lack of Exercise**: Indoor cats may not get enough physical activity, leading to muscle atrophy and other health issues.\n\nTo help keep Mochi healthy, ensure she has a balanced diet, regular veterinary check-ups, plenty of playtime, and mental stimulation.",
+          "response_relevance": 1.0,
+          "context_utilization": 0,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "none",
+          "token_count": 374,
+          "latency_ms": 7709
+        },
+        {
+          "conv_id": "conv_06",
+          "turn_idx": 2,
+          "agent_type": "baseline",
+          "user_input": "What's my cat's name and age?",
+          "response": "Your cat's name is Mochi, and she is 3 years old.",
+          "response_relevance": 1.0,
+          "context_utilization": 0,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "none",
+          "token_count": 26,
+          "latency_ms": 1111
+        }
+      ],
+      "summary": {
+        "avg_relevance": 1.0,
+        "avg_context_util": 0.0,
+        "avg_memory_hit_rate": 0.0,
+        "avg_tokens": 148.66666666666666,
+        "total_tokens": 446
+      }
+    },
+    {
+      "conv_id": "conv_07",
+      "name": "Location & Context",
+      "agent_type": "memory",
+      "turns": [
+        {
+          "conv_id": "conv_07",
+          "turn_idx": 0,
+          "agent_type": "memory",
+          "user_input": "I'm based in Hanoi, Vietnam and often deal with hot, humid weather.",
+          "response": "That sounds like quite a climate to manage! Staying cool and hydrated is important in hot, humid weather. Do you have any favorite ways to beat the heat in Hanoi?",
+          "response_relevance": 1.0,
+          "context_utilization": 1,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "short_term",
+          "token_count": 243,
+          "latency_ms": 1898
+        },
+        {
+          "conv_id": "conv_07",
+          "turn_idx": 1,
+          "agent_type": "memory",
+          "user_input": "What clothing materials are best for this climate?",
+          "response": "In hot and humid climates like Hanoi, it's best to choose lightweight, breathable fabrics. Here are some great options:\n\n1. **Cotton**: Soft and breathable, cotton helps absorb moisture and keeps you cool.\n2. **Linen**: Very breathable and has a loose weave, making it great for hot weather.\n3. **Rayon**: Lightweight and moisture-wicking, rayon can help keep you comfortable.\n4. **Bamboo**: Naturally breathable and moisture-wicking, bamboo fabric is also eco-friendly.\n5. **Moisture-wicking synthetics**: Fabrics like polyester blends can help keep sweat away from your skin.\n\nLight colors can also help reflect sunlight and keep you cooler. Do you have any specific clothing items in mind that you’re considering?",
+          "response_relevance": 1.0,
+          "context_utilization": 1,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "short_term",
+          "token_count": 367,
+          "latency_ms": 4022
+        },
+        {
+          "conv_id": "conv_07",
+          "turn_idx": 2,
+          "agent_type": "memory",
+          "user_input": "What city did I say I'm from?",
+          "response": "You mentioned that you're based in Hanoi, Vietnam. How's the weather there lately?",
+          "response_relevance": 1.0,
+          "context_utilization": 1,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "short_term",
+          "token_count": 231,
+          "latency_ms": 1636
+        }
+      ],
+      "summary": {
+        "avg_relevance": 1.0,
+        "avg_context_util": 1.0,
+        "avg_memory_hit_rate": 0.0,
+        "avg_tokens": 280.3333333333333,
+        "total_tokens": 841
+      }
+    },
+    {
+      "conv_id": "conv_07",
+      "name": "Location & Context",
+      "agent_type": "baseline",
+      "turns": [
+        {
+          "conv_id": "conv_07",
+          "turn_idx": 0,
+          "agent_type": "baseline",
+          "user_input": "I'm based in Hanoi, Vietnam and often deal with hot, humid weather.",
+          "response": "Hanoi's hot and humid climate can indeed be challenging. Here are some tips to help you cope with the weather:\n\n1. **Stay Hydrated**: Drink plenty of water throughout the day to stay hydrated. Consider electrolyte drinks if you're sweating a lot.\n\n2. **Dress Appropriately**: Wear loose-fitting, light-colored, and breathable clothing made from natural fibers like cotton or linen. This can help keep you cool.\n\n3. **Use Sunscreen**: Protect your skin from the sun's harmful rays by applying sunscreen with a high SPF, especially if you plan to be outdoors.\n\n4. **Plan Your Activities**: Try to schedule outdoor activities for early morning or late afternoon when temperatures are cooler. Avoid the midday sun if possible.\n\n5. **Seek Shade**: When outdoors, look for shaded areas to rest and cool down. Carry an umbrella or a hat for additional sun protection.\n\n6. **Air Conditioning and Fans**: Use air conditioning or fans to cool down your living space. If you don’t have air conditioning, consider visiting air-conditioned public spaces like malls or cafes.\n\n7. **Cool Showers**: Taking cool showers can help lower your body temperature and provide relief from the heat.\n\n8. **Eat Light**: Opt for lighter meals that are easier to digest, such as salads, fruits, and smoothies. Avoid heavy, hot meals that can increase body temperature.\n\n9. **Stay Informed**: Keep an eye on weather forecasts and heat advisories to plan your day accordingly.\n\n10. **Exercise Wisely**: If you exercise outdoors, consider doing so in the early morning or late evening when it's cooler, and always listen to your body.\n\nBy following these tips, you can better manage the hot and humid weather in Hanoi. Stay cool!",
+          "response_relevance": 1.0,
+          "context_utilization": 0,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "none",
+          "token_count": 376,
+          "latency_ms": 5358
+        },
+        {
+          "conv_id": "conv_07",
+          "turn_idx": 1,
+          "agent_type": "baseline",
+          "user_input": "What clothing materials are best for this climate?",
+          "response": "In hot and humid climates like Hanoi, Vietnam, it's important to choose clothing materials that are breathable, lightweight, and moisture-wicking. Here are some of the best materials for such weather:\n\n1. **Cotton**: A natural fiber that is soft, breathable, and comfortable. It absorbs moisture well but can take longer to dry.\n\n2. **Linen**: Known for its excellent breathability and moisture-wicking properties, linen is a great choice for hot weather. It has a loose weave that allows air to circulate.\n\n3. **Bamboo**: This fabric is soft, breathable, and has natural moisture-wicking and antibacterial properties. It can help keep you cool and comfortable.\n\n4. **Rayon**: Made from natural fibers, rayon is lightweight and breathable. It drapes well and can be a good option for summer clothing.\n\n5. **Performance Fabrics**: Look for synthetic materials designed for moisture-wicking, such as polyester or nylon blends. These fabrics can help keep you dry by pulling sweat away from your skin.\n\n6. **Chambray**: A lightweight cotton fabric that resembles denim but is much cooler and more breathable.\n\n7. **Tencel (Lyocell)**: A sustainable fabric made from wood pulp, Tencel is soft, breathable, and has moisture-wicking properties.\n\nWhen choosing clothing, opt for loose-fitting styles to allow for better airflow, and light colors to reflect sunlight. Avoid heavy fabrics like wool or thick polyester, as they can trap heat and moisture.",
+          "response_relevance": 1.0,
+          "context_utilization": 0,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "none",
+          "token_count": 320,
+          "latency_ms": 4360
+        },
+        {
+          "conv_id": "conv_07",
+          "turn_idx": 2,
+          "agent_type": "baseline",
+          "user_input": "What city did I say I'm from?",
+          "response": "You mentioned that you are based in Hanoi, Vietnam.",
+          "response_relevance": 1.0,
+          "context_utilization": 0,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "none",
+          "token_count": 21,
+          "latency_ms": 632
+        }
+      ],
+      "summary": {
+        "avg_relevance": 1.0,
+        "avg_context_util": 0.0,
+        "avg_memory_hit_rate": 0.0,
+        "avg_tokens": 239.0,
+        "total_tokens": 717
+      }
+    },
+    {
+      "conv_id": "conv_08",
+      "name": "Technical Stack Memory",
+      "agent_type": "memory",
+      "turns": [
+        {
+          "conv_id": "conv_08",
+          "turn_idx": 0,
+          "agent_type": "memory",
+          "user_input": "Our tech stack is Python, FastAPI, PostgreSQL, and React.",
+          "response": "That sounds like a solid tech stack! Python and FastAPI are great for building efficient APIs, and PostgreSQL is a robust choice for your database. React will help you create a dynamic front end. Are you working on a specific project with this stack?",
+          "response_relevance": 1.0,
+          "context_utilization": 1,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "short_term",
+          "token_count": 263,
+          "latency_ms": 2294
+        },
+        {
+          "conv_id": "conv_08",
+          "turn_idx": 1,
+          "agent_type": "memory",
+          "user_input": "What are best practices for API design in this stack?",
+          "response": "Here are some best practices for API design using your stack of Python, FastAPI, PostgreSQL, and React:\n\n1. **Use RESTful Principles**: Design your API endpoints around resources and use standard HTTP methods (GET, POST, PUT, DELETE) for operations.\n\n2. **Consistent Naming Conventions**: Use clear and consistent naming for your endpoints. For example, use plural nouns for resource names (e.g., `/users`, `/products`).\n\n3. **Versioning**: Include versioning in your API (e.g., `/api/v1/users`) to manage changes and maintain backward compatibility.\n\n4. **Error Handling**: Implement consistent error responses with appropriate HTTP status codes and meaningful error messages.\n\n5. **Authentication and Authorization**: Use OAuth2 or JWT for secure user authentication and authorization. FastAPI has built-in support for these.\n\n6. **Data Validation**: Leverage Pydantic models in FastAPI for request validation and serialization, ensuring data integrity.\n\n7. **Documentation**: FastAPI automatically generates interactive API documentation (Swagger UI) which is great for both development and client-side integration.\n\n8. **Pagination and Filtering**: Implement pagination and filtering for endpoints that return lists of resources to improve performance and usability.\n\n9. **Rate Limiting**: Consider implementing rate limiting to protect your API from abuse and ensure fair usage.\n\n10. **Testing**: Write unit and integration tests for your API to ensure reliability and catch issues early.\n\nFollowing these practices will help you create a robust and user-friendly API. If you have specific areas you'd like to dive deeper into, let me know!",
+          "response_relevance": 1.0,
+          "context_utilization": 1,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "short_term",
+          "token_count": 525,
+          "latency_ms": 6834
+        },
+        {
+          "conv_id": "conv_08",
+          "turn_idx": 2,
+          "agent_type": "memory",
+          "user_input": "What backend framework did I mention we use?",
+          "response": "You mentioned that you use FastAPI as your backend framework. How's the development going with it?",
+          "response_relevance": 0.5,
+          "context_utilization": 1,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "short_term",
+          "token_count": 225,
+          "latency_ms": 2275
+        }
+      ],
+      "summary": {
+        "avg_relevance": 0.8333333333333334,
+        "avg_context_util": 1.0,
+        "avg_memory_hit_rate": 0.0,
+        "avg_tokens": 337.6666666666667,
+        "total_tokens": 1013
+      }
+    },
+    {
+      "conv_id": "conv_08",
+      "name": "Technical Stack Memory",
+      "agent_type": "baseline",
+      "turns": [
+        {
+          "conv_id": "conv_08",
+          "turn_idx": 0,
+          "agent_type": "baseline",
+          "user_input": "Our tech stack is Python, FastAPI, PostgreSQL, and React.",
+          "response": "That sounds like a solid tech stack! Here’s a brief overview of each component and how they work together:\n\n1. **Python**: A versatile programming language that is widely used for backend development. It’s known for its readability and ease of use, making it a great choice for building APIs.\n\n2. **FastAPI**: A modern web framework for building APIs with Python. It’s designed for high performance and is based on standard Python type hints. FastAPI is asynchronous, which allows for handling many requests concurrently, making it a great choice for applications that require high throughput.\n\n3. **PostgreSQL**: An advanced open-source relational database management system. It’s known for its robustness, scalability, and support for advanced data types and queries. PostgreSQL works well with FastAPI for data storage and retrieval.\n\n4. **React**: A popular JavaScript library for building user interfaces, particularly single-page applications (SPAs). React allows for the creation of dynamic and responsive UIs, and it can easily communicate with your FastAPI backend through HTTP requests (often using Axios or Fetch API).\n\n### How They Work Together\n\n- **Frontend (React)**: The user interacts with the React application, which sends requests to the FastAPI backend to fetch or manipulate data.\n  \n- **Backend (FastAPI)**: FastAPI handles incoming requests from the React frontend, processes them (including any necessary business logic), and interacts with the PostgreSQL database to retrieve or store data.\n\n- **Database (PostgreSQL)**: The FastAPI application communicates with PostgreSQL to perform CRUD (Create, Read, Update, Delete) operations on the data.\n\n### Example Workflow\n\n1. A user interacts with a form in the React app to submit data.\n2. The React app sends a POST request to a FastAPI endpoint.\n3. FastAPI processes the request, validates the data, and interacts with PostgreSQL to store the data.\n4. FastAPI sends a response back to the React app, which updates the UI accordingly.\n\n### Benefits of This Stack\n\n- **Performance**: FastAPI is built for speed and can handle many requests efficiently.\n- **Scalability**: PostgreSQL can handle large amounts of data and complex queries.\n- **Developer Experience**: Python and FastAPI provide a great developer experience with features like automatic API documentation (Swagger UI).\n- **Component Reusability**: React allows for building reusable UI components, making it easier to maintain and scale the frontend.\n\nIf you have specific questions or need guidance on a particular aspect of this tech stack, feel free to ask!",
+          "response_relevance": 1.0,
+          "context_utilization": 0,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "none",
+          "token_count": 523,
+          "latency_ms": 6850
+        },
+        {
+          "conv_id": "conv_08",
+          "turn_idx": 1,
+          "agent_type": "baseline",
+          "user_input": "What are best practices for API design in this stack?",
+          "response": "Designing APIs effectively is crucial for ensuring that your application is maintainable, scalable, and easy to use. Here are some best practices for API design in a stack that includes Python, FastAPI, PostgreSQL, and React:\n\n### 1. **Use RESTful Principles**\n   - **Resource-Oriented Design**: Structure your API around resources (nouns) rather than actions (verbs). For example, use `/users` to represent user resources.\n   - **HTTP Methods**: Use appropriate HTTP methods:\n     - `GET` for retrieving resources.\n     - `POST` for creating resources.\n     - `PUT` for updating resources.\n     - `DELETE` for removing resources.\n\n### 2. **Consistent Naming Conventions**\n   - Use clear and consistent naming for endpoints. Stick to plural nouns for resource names (e.g., `/users`, `/products`).\n   - Use snake_case for query parameters and JSON keys to maintain consistency with Python conventions.\n\n### 3. **Versioning**\n   - Version your API to manage changes over time. Include the version in the URL (e.g., `/api/v1/users`).\n\n### 4. **Use FastAPI Features**\n   - **Data Validation**: Leverage Pydantic models for request validation and serialization. This ensures that your API receives the expected data types and structures.\n   - **Automatic Documentation**: Utilize FastAPI's automatic generation of OpenAPI documentation. Ensure your endpoints are well-documented with descriptions, examples, and response models.\n\n### 5. **Error Handling**\n   - Implement consistent error handling. Use standard HTTP status codes (e.g., 404 for not found, 400 for bad request).\n   - Provide meaningful error messages in the response body to help clients understand what went wrong.\n\n### 6. **Authentication and Authorization**\n   - Use OAuth2 or JWT for secure authentication and authorization. FastAPI has built-in support for these methods.\n   - Protect sensitive endpoints and ensure that users have the necessary permissions to access resources.\n\n### 7. **Pagination and Filtering**\n   - Implement pagination for endpoints that return lists of resources to avoid overwhelming clients with too much data.\n   - Allow filtering and sorting of results through query parameters (e.g., `/users?age=30&sort=name`).\n\n### 8. **Rate Limiting**\n   - Consider implementing rate limiting to prevent abuse of your API. This can protect your backend services and ensure fair usage.\n\n### 9. **CORS Configuration**\n   - Configure Cross-Origin Resource Sharing (CORS) in FastAPI to allow your React frontend to communicate with your API. Be cautious about which origins you allow.\n\n### 10. **Testing**\n   - Write unit and integration tests for your API endpoints. FastAPI supports testing with tools like pytest.\n   - Use tools like Postman or Swagger UI to manually test your API during development.\n\n### 11. **Database Interaction**\n   - Use an ORM like SQLAlchemy or Tortoise-ORM for interacting with PostgreSQL. This abstracts away raw SQL and helps maintain cleaner code.\n   - Ensure proper database indexing for performance, especially on frequently queried fields.\n\n### 12. **Logging and Monitoring**\n   - Implement logging to track API usage and errors. Use tools like ELK Stack or Prometheus for monitoring.\n   - Consider using APM (Application Performance Monitoring) tools to gain insights into performance bottlenecks.\n\n### 13. **Documentation**\n   - Maintain clear and comprehensive API documentation. Use tools like Swagger UI or Postman to provide interactive API documentation.\n   - Include examples of requests and responses in your documentation.\n\n### 14. **Security Best Practices**\n   - Always validate and sanitize user inputs to prevent SQL injection and other attacks.\n   - Use HTTPS to encrypt data in transit.\n\nBy following these best practices, you can create a robust, user-friendly API that integrates well with your tech stack and provides a solid foundation for your application.",
+          "response_relevance": 1.0,
+          "context_utilization": 0,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "none",
+          "token_count": 808,
+          "latency_ms": 9584
+        },
+        {
+          "conv_id": "conv_08",
+          "turn_idx": 2,
+          "agent_type": "baseline",
+          "user_input": "What backend framework did I mention we use?",
+          "response": "You mentioned that you use FastAPI as your backend framework.",
+          "response_relevance": 0.5,
+          "context_utilization": 0,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "none",
+          "token_count": 21,
+          "latency_ms": 953
+        }
+      ],
+      "summary": {
+        "avg_relevance": 0.8333333333333334,
+        "avg_context_util": 0.0,
+        "avg_memory_hit_rate": 0.0,
+        "avg_tokens": 450.6666666666667,
+        "total_tokens": 1352
+      }
+    },
+    {
+      "conv_id": "conv_09",
+      "name": "Goal & Intent Tracking",
+      "agent_type": "memory",
+      "turns": [
+        {
+          "conv_id": "conv_09",
+          "turn_idx": 0,
+          "agent_type": "memory",
+          "user_input": "My goal this year is to publish a research paper on NLP.",
+          "response": "That sounds like an exciting goal! NLP is a rapidly evolving field with plenty of opportunities for research. Do you have a specific topic or area within NLP that you're interested in exploring for your paper?",
+          "response_relevance": 1.0,
+          "context_utilization": 1,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "short_term",
+          "token_count": 252,
+          "latency_ms": 2402
+        },
+        {
+          "conv_id": "conv_09",
+          "turn_idx": 1,
+          "agent_type": "memory",
+          "user_input": "What steps should I take to achieve this?",
+          "response": "To publish a research paper on NLP, here are some steps you can take:\n\n1. **Identify a Research Topic**: Choose a specific area within NLP that interests you, such as sentiment analysis, machine translation, or language models.\n\n2. **Conduct a Literature Review**: Read existing papers to understand the current state of research and identify gaps that your work could fill.\n\n3. **Formulate a Research Question**: Develop a clear and focused research question or hypothesis based on your literature review.\n\n4. **Design Your Methodology**: Decide on the methods and tools you will use for your research, including data sources, algorithms, and evaluation metrics.\n\n5. **Collect and Analyze Data**: Gather the necessary data and perform your analysis, ensuring to document your process and results.\n\n6. **Write the Paper**: Structure your paper with a clear introduction, methodology, results, discussion, and conclusion. Follow the formatting guidelines of your target journal or conference.\n\n7. **Seek Feedback**: Share your draft with peers or mentors for constructive feedback and make necessary revisions.\n\n8. **Choose a Journal or Conference**: Identify a suitable venue for publication that aligns with your research topic.\n\n9. **Submit Your Paper**: Follow the submission guidelines carefully and submit your paper.\n\n10. **Prepare for Revisions**: Be ready to respond to reviewer comments and make revisions as needed.\n\nIf you need help with any specific step, feel free to ask!",
+          "response_relevance": 1.0,
+          "context_utilization": 1,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "short_term",
+          "token_count": 495,
+          "latency_ms": 5830
+        },
+        {
+          "conv_id": "conv_09",
+          "turn_idx": 2,
+          "agent_type": "memory",
+          "user_input": "What was the goal I mentioned at the start?",
+          "response": "Your goal this year is to publish a research paper on NLP. Have you made any progress on it?",
+          "response_relevance": 1.0,
+          "context_utilization": 1,
+          "memory_hit_rate": 1.0,
+          "memory_hits": 3,
+          "memory_type": "semantic",
+          "token_count": 266,
+          "latency_ms": 2257
+        }
+      ],
+      "summary": {
+        "avg_relevance": 1.0,
+        "avg_context_util": 1.0,
+        "avg_memory_hit_rate": 0.3333333333333333,
+        "avg_tokens": 337.6666666666667,
+        "total_tokens": 1013
+      }
+    },
+    {
+      "conv_id": "conv_09",
+      "name": "Goal & Intent Tracking",
+      "agent_type": "baseline",
+      "turns": [
+        {
+          "conv_id": "conv_09",
+          "turn_idx": 0,
+          "agent_type": "baseline",
+          "user_input": "My goal this year is to publish a research paper on NLP.",
+          "response": "That’s a great goal! Publishing a research paper in Natural Language Processing (NLP) can be a rewarding experience. Here are some steps to help you achieve that:\n\n1. **Identify Your Research Area**: NLP is a broad field. Narrow down your focus to a specific area that interests you, such as sentiment analysis, machine translation, text summarization, information retrieval, or conversational agents.\n\n2. **Literature Review**: Conduct a thorough literature review to understand the current state of research in your chosen area. Identify gaps in the existing literature that your research could address.\n\n3. **Formulate a Research Question**: Based on your literature review, develop a clear and concise research question or hypothesis that you want to explore.\n\n4. **Choose a Methodology**: Decide on the methods you will use to conduct your research. This could involve data collection, model training, experiments, or theoretical analysis.\n\n5. **Collect Data**: If your research requires data, gather relevant datasets. You can use publicly available datasets, or you may need to create your own.\n\n6. **Conduct Experiments**: Implement your methodology and conduct experiments to test your hypothesis. Make sure to document your process and results carefully.\n\n7. **Analyze Results**: Analyze the results of your experiments. Consider using statistical methods to validate your findings.\n\n8. **Write the Paper**: Structure your paper typically into sections: Introduction, Related Work, Methodology, Experiments, Results, Discussion, and Conclusion. Be clear and concise in your writing.\n\n9. **Cite Sources**: Make sure to properly cite all the sources you referenced in your research.\n\n10. **Choose a Conference or Journal**: Identify suitable conferences or journals for your paper. Consider factors like the scope, audience, and submission deadlines.\n\n11. **Peer Review**: Before submission, consider sharing your paper with colleagues or mentors for feedback. Incorporate their suggestions to improve your paper.\n\n12. **Submit Your Paper**: Follow the submission guidelines of the chosen conference or journal carefully.\n\n13. **Prepare for Revisions**: Be ready to receive feedback from reviewers. You may need to revise your paper based on their comments.\n\n14. **Stay Persistent**: If your paper is rejected, don’t be discouraged. Use the feedback to improve your work and consider submitting to another venue.\n\n15. **Network**: Attend conferences, workshops, and seminars to network with other researchers in NLP. This can lead to collaborations and new ideas.\n\nRemember to manage your time effectively and set milestones to keep yourself on track. Good luck with your research paper! If you have any specific questions or need further assistance, feel free to ask.",
+          "response_relevance": 1.0,
+          "context_utilization": 0,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "none",
+          "token_count": 547,
+          "latency_ms": 7461
+        },
+        {
+          "conv_id": "conv_09",
+          "turn_idx": 1,
+          "agent_type": "baseline",
+          "user_input": "What steps should I take to achieve this?",
+          "response": "Publishing a research paper in Natural Language Processing (NLP) is an exciting goal! Here’s a step-by-step guide to help you achieve it:\n\n### 1. **Identify Your Research Area**\n   - **Literature Review**: Read recent papers in NLP to identify gaps in the research or areas of interest.\n   - **Choose a Topic**: Select a specific problem or question you want to address. It could be related to sentiment analysis, machine translation, language generation, etc.\n\n### 2. **Conduct Preliminary Research**\n   - **Gather Data**: Depending on your topic, you may need to collect datasets. Use existing datasets or create your own.\n   - **Explore Existing Solutions**: Understand the current state-of-the-art methods and technologies related to your topic.\n\n### 3. **Formulate Your Research Question**\n   - Clearly define what you want to investigate. Make sure it’s specific, measurable, and researchable.\n\n### 4. **Develop a Methodology**\n   - **Choose Techniques**: Decide on the algorithms and models you will use (e.g., deep learning, traditional NLP methods).\n   - **Design Experiments**: Plan how you will test your hypotheses and evaluate your results.\n\n### 5. **Implement Your Approach**\n   - **Coding**: Write the necessary code to implement your models and experiments. Use frameworks like TensorFlow, PyTorch, or spaCy.\n   - **Experimentation**: Run experiments, tweak parameters, and gather results.\n\n### 6. **Analyze Results**\n   - **Evaluate Performance**: Use appropriate metrics (e.g., accuracy, F1 score, BLEU score) to assess your model's performance.\n   - **Interpret Findings**: Analyze the results in the context of your research question.\n\n### 7. **Write the Paper**\n   - **Structure**: Follow a standard research paper structure: Abstract, Introduction, Related Work, Methodology, Results, Discussion, Conclusion, References.\n   - **Clarity and Precision**: Write clearly and concisely. Make sure to explain your methods and findings thoroughly.\n\n### 8. **Get Feedback**\n   - **Peer Review**: Share your draft with colleagues or mentors for feedback.\n   - **Revise**: Incorporate feedback and make necessary revisions.\n\n### 9. **Choose a Venue for Publication**\n   - **Select a Conference or Journal**: Identify suitable conferences (e.g., ACL, EMNLP, NAACL) or journals (e.g., Journal of NLP, Computational Linguistics).\n   - **Check Submission Guidelines**: Ensure your paper adheres to the formatting and submission requirements of the chosen venue.\n\n### 10. **Submit Your Paper**\n   - **Prepare for Submission**: Format your paper according to the guidelines.\n   - **Submit**: Follow the submission process for the conference or journal.\n\n### 11. **Prepare for Revisions**\n   - **Respond to Reviews**: If your paper is accepted with revisions, address the reviewers' comments thoroughly.\n   - **Resubmit**: Make the necessary changes and resubmit your paper.\n\n### 12. **Network and Present Your Work**\n   - **Attend Conferences**: If accepted, present your paper at the conference. Networking can lead to collaborations and further research opportunities.\n   - **Engage with the Community**: Share your work on platforms like ResearchGate, arXiv, or social media.\n\n### 13. **Stay Updated**\n   - **Follow Trends**: Keep up with the latest developments in NLP to inform your future research.\n\n### Additional Tips:\n- **Time Management**: Set a timeline for each step to keep yourself on track.\n- **Collaboration**: Consider collaborating with others, especially if they have expertise in areas where you may need support.\n- **Continuous Learning**: Engage with online courses, workshops, and webinars to enhance your knowledge and skills in NLP.\n\nGood luck with your research paper!",
+          "response_relevance": 1.0,
+          "context_utilization": 0,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "none",
+          "token_count": 807,
+          "latency_ms": 9637
+        },
+        {
+          "conv_id": "conv_09",
+          "turn_idx": 2,
+          "agent_type": "baseline",
+          "user_input": "What was the goal I mentioned at the start?",
+          "response": "Your goal this year is to publish a research paper on Natural Language Processing (NLP).",
+          "response_relevance": 1.0,
+          "context_utilization": 0,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "none",
+          "token_count": 28,
+          "latency_ms": 1885
+        }
+      ],
+      "summary": {
+        "avg_relevance": 1.0,
+        "avg_context_util": 0.0,
+        "avg_memory_hit_rate": 0.0,
+        "avg_tokens": 460.6666666666667,
+        "total_tokens": 1382
+      }
+    },
+    {
+      "conv_id": "conv_10",
+      "name": "Mixed Context Synthesis",
+      "agent_type": "memory",
+      "turns": [
+        {
+          "conv_id": "conv_10",
+          "turn_idx": 0,
+          "agent_type": "memory",
+          "user_input": "I'm a student at VinUniversity studying AI, and I prefer concise answers.",
+          "response": "Got it, An! You're studying AI at VinUniversity and prefer concise answers. How can I assist you today?",
+          "response_relevance": 1.0,
+          "context_utilization": 1,
+          "memory_hit_rate": 1.0,
+          "memory_hits": 4,
+          "memory_type": "long_term",
+          "token_count": 287,
+          "latency_ms": 1760
+        },
+        {
+          "conv_id": "conv_10",
+          "turn_idx": 1,
+          "agent_type": "memory",
+          "user_input": "What are the most important AI concepts I should master?",
+          "response": "Here are some key AI concepts you should master:\n\n1. **Machine Learning**: Understand supervised, unsupervised, and reinforcement learning.\n2. **Deep Learning**: Learn about neural networks, CNNs, RNNs, and frameworks like TensorFlow or PyTorch.\n3. **Natural Language Processing (NLP)**: Focus on language models, tokenization, and text generation.\n4. **Computer Vision**: Explore image processing, object detection, and image classification.\n5. **Data Preprocessing**: Get familiar with data cleaning, normalization, and feature engineering.\n6. **Algorithms and Data Structures**: Strengthen your foundation in algorithms relevant to AI.\n7. **Ethics in AI**: Understand the ethical implications and biases in AI systems.\n\nThese concepts will provide a solid foundation for your studies in AI. Let me know if you want to dive deeper into any specific area!",
+          "response_relevance": 1.0,
+          "context_utilization": 1,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "short_term",
+          "token_count": 384,
+          "latency_ms": 3472
+        },
+        {
+          "conv_id": "conv_10",
+          "turn_idx": 2,
+          "agent_type": "memory",
+          "user_input": "Based on everything I've told you, give me a personalized study plan.",
+          "response": "Here's a personalized study plan for you, focusing on key AI concepts and your goal of publishing a research paper on NLP:\n\n### Weekly Study Plan\n\n**Week 1-2: Foundations of AI**\n- **Topics**: Machine Learning basics (supervised, unsupervised, reinforcement learning)\n- **Activities**: \n  - Read introductory materials and watch online lectures.\n  - Complete basic ML exercises on platforms like Kaggle.\n\n**Week 3-4: Deep Learning**\n- **Topics**: Neural networks, CNNs, RNNs, and transfer learning.\n- **Activities**: \n  - Implement simple models using TensorFlow or PyTorch.\n  - Explore online courses focusing on deep learning.\n\n**Week 5-6: Natural Language Processing (NLP)**\n- **Topics**: Text preprocessing, word embeddings, and language models.\n- **Activities**: \n  - Work on NLP projects (e.g., sentiment analysis, text classification).\n  - Read research papers related to your interests in NLP.\n\n**Week 7-8: Advanced NLP Techniques**\n- **Topics**: Transformers, BERT, GPT, and attention mechanisms.\n- **Activities**: \n  - Experiment with pre-trained models and fine-tuning.\n  - Start drafting sections of your research paper based on your findings.\n\n**Week 9-10: Research and Writing**\n- **Activities**: \n  - Finalize your research paper outline.\n  - Write and revise your paper, focusing on clarity and conciseness.\n\n### Additional Tips\n- Set aside time each week for hands-on projects to reinforce learning.\n- Join study groups or forums to discuss concepts and get feedback on your research.\n- Regularly review and adjust your plan based on your progress.\n\nLet me know if you'd like to modify any part of this plan!",
+          "response_relevance": 0.667,
+          "context_utilization": 1,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "short_term",
+          "token_count": 575,
+          "latency_ms": 5777
+        }
+      ],
+      "summary": {
+        "avg_relevance": 0.8889999999999999,
+        "avg_context_util": 1.0,
+        "avg_memory_hit_rate": 0.3333333333333333,
+        "avg_tokens": 415.3333333333333,
+        "total_tokens": 1246
+      }
+    },
+    {
+      "conv_id": "conv_10",
+      "name": "Mixed Context Synthesis",
+      "agent_type": "baseline",
+      "turns": [
+        {
+          "conv_id": "conv_10",
+          "turn_idx": 0,
+          "agent_type": "baseline",
+          "user_input": "I'm a student at VinUniversity studying AI, and I prefer concise answers.",
+          "response": "Got it! I'll keep my responses brief. How can I assist you today?",
+          "response_relevance": 1.0,
+          "context_utilization": 0,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "none",
+          "token_count": 33,
+          "latency_ms": 923
+        },
+        {
+          "conv_id": "conv_10",
+          "turn_idx": 1,
+          "agent_type": "baseline",
+          "user_input": "What are the most important AI concepts I should master?",
+          "response": "Here are key AI concepts to master:\n\n1. **Machine Learning**: Supervised, unsupervised, and reinforcement learning.\n2. **Deep Learning**: Neural networks, CNNs, RNNs, and frameworks like TensorFlow and PyTorch.\n3. **Natural Language Processing (NLP)**: Text processing, sentiment analysis, and language models.\n4. **Computer Vision**: Image classification, object detection, and image segmentation.\n5. **Data Preprocessing**: Data cleaning, normalization, and feature engineering.\n6. **Model Evaluation**: Metrics (accuracy, precision, recall, F1 score) and validation techniques (cross-validation).\n7. **Ethics in AI**: Bias, fairness, and responsible AI practices.\n8. **AI Algorithms**: Decision trees, SVMs, clustering algorithms, and ensemble methods.\n9. **Optimization Techniques**: Gradient descent, backpropagation, and hyperparameter tuning.\n10. **AI Applications**: Real-world use cases in various industries.\n\nFocus on these areas for a strong foundation in AI.",
+          "response_relevance": 1.0,
+          "context_utilization": 0,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "none",
+          "token_count": 219,
+          "latency_ms": 3445
+        },
+        {
+          "conv_id": "conv_10",
+          "turn_idx": 2,
+          "agent_type": "baseline",
+          "user_input": "Based on everything I've told you, give me a personalized study plan.",
+          "response": "Here’s a concise study plan for mastering key AI concepts:\n\n### Week 1-2: Foundations of AI\n- **Study Topics**: History of AI, Types of AI (Narrow vs. General), Applications\n- **Resources**: Online courses (Coursera, edX), AI textbooks\n\n### Week 3-4: Machine Learning Basics\n- **Study Topics**: Supervised vs. Unsupervised Learning, Regression, Classification\n- **Resources**: \"Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow\"\n\n### Week 5-6: Deep Learning\n- **Study Topics**: Neural Networks, CNNs, RNNs\n- **Resources**: Deep Learning Specialization (Coursera), \"Deep Learning\" by Ian Goodfellow\n\n### Week 7-8: Natural Language Processing (NLP)\n- **Study Topics**: Text Processing, Sentiment Analysis, Transformers\n- **Resources**: NLP with Python, Hugging Face tutorials\n\n### Week 9-10: Reinforcement Learning\n- **Study Topics**: Markov Decision Processes, Q-Learning, Policy Gradients\n- **Resources**: \"Reinforcement Learning: An Introduction\" by Sutton and Barto\n\n### Week 11-12: Ethics and AI\n- **Study Topics**: Bias in AI, Fairness, Transparency\n- **Resources**: Articles, case studies, and relevant podcasts\n\n### Ongoing: Practical Experience\n- **Projects**: Implement small projects using Kaggle datasets.\n- **Collaboration**: Join study groups or online forums.\n\n### Review and Iterate\n- **Assess**: Weekly quizzes or self-assessments.\n- **Adjust**: Modify the plan based on your progress and interests.\n\nStay consistent and seek help when needed!",
+          "response_relevance": 0.667,
+          "context_utilization": 0,
+          "memory_hit_rate": 0.0,
+          "memory_hits": 0,
+          "memory_type": "none",
+          "token_count": 373,
+          "latency_ms": 5509
+        }
+      ],
+      "summary": {
+        "avg_relevance": 0.8889999999999999,
+        "avg_context_util": 0.0,
+        "avg_memory_hit_rate": 0.0,
+        "avg_tokens": 208.33333333333334,
+        "total_tokens": 625
+      }
+    }
+  ],
+  "summary": [
+    {
+      "conv_id": "conv_01",
+      "name": "Name & Language Preference",
+      "mem_relevance": 0.833,
+      "base_relevance": 0.833,
+      "relevance_delta": 0.0,
+      "mem_context_util": 0.667,
+      "mem_hit_rate": 0.333,
+      "mem_tokens_avg": 236.7,
+      "base_tokens_avg": 206.7,
+      "token_efficiency": 3.5211
+    },
+    {
+      "conv_id": "conv_02",
+      "name": "Age & Health Fact Tracking",
+      "mem_relevance": 0.833,
+      "base_relevance": 0.833,
+      "relevance_delta": 0.0,
+      "mem_context_util": 1.0,
+      "mem_hit_rate": 0.0,
+      "mem_tokens_avg": 524.0,
+      "base_tokens_avg": 435.0,
+      "token_efficiency": 1.5903
+    },
+    {
+      "conv_id": "conv_03",
+      "name": "Professional Context Recall",
+      "mem_relevance": 1.0,
+      "base_relevance": 1.0,
+      "relevance_delta": 0.0,
+      "mem_context_util": 1.0,
+      "mem_hit_rate": 0.667,
+      "mem_tokens_avg": 564.7,
+      "base_tokens_avg": 356.7,
+      "token_efficiency": 1.771
+    },
+    {
+      "conv_id": "conv_04",
+      "name": "Learning Style Preferences",
+      "mem_relevance": 1.0,
+      "base_relevance": 1.0,
+      "relevance_delta": 0.0,
+      "mem_context_util": 1.0,
+      "mem_hit_rate": 0.667,
+      "mem_tokens_avg": 334.3,
+      "base_tokens_avg": 425.3,
+      "token_efficiency": 2.991
+    },
+    {
+      "conv_id": "conv_05",
+      "name": "Topic Continuity",
+      "mem_relevance": 1.0,
+      "base_relevance": 1.0,
+      "relevance_delta": 0.0,
+      "mem_context_util": 1.0,
+      "mem_hit_rate": 0.667,
+      "mem_tokens_avg": 341.7,
+      "base_tokens_avg": 336.7,
+      "token_efficiency": 2.9268
+    },
+    {
+      "conv_id": "conv_06",
+      "name": "Multi-fact Retention",
+      "mem_relevance": 1.0,
+      "base_relevance": 1.0,
+      "relevance_delta": 0.0,
+      "mem_context_util": 1.0,
+      "mem_hit_rate": 0.0,
+      "mem_tokens_avg": 274.3,
+      "base_tokens_avg": 148.7,
+      "token_efficiency": 3.6452
+    },
+    {
+      "conv_id": "conv_07",
+      "name": "Location & Context",
+      "mem_relevance": 1.0,
+      "base_relevance": 1.0,
+      "relevance_delta": 0.0,
+      "mem_context_util": 1.0,
+      "mem_hit_rate": 0.0,
+      "mem_tokens_avg": 280.3,
+      "base_tokens_avg": 239.0,
+      "token_efficiency": 3.5672
+    },
+    {
+      "conv_id": "conv_08",
+      "name": "Technical Stack Memory",
+      "mem_relevance": 0.833,
+      "base_relevance": 0.833,
+      "relevance_delta": 0.0,
+      "mem_context_util": 1.0,
+      "mem_hit_rate": 0.0,
+      "mem_tokens_avg": 337.7,
+      "base_tokens_avg": 450.7,
+      "token_efficiency": 2.4679
+    },
+    {
+      "conv_id": "conv_09",
+      "name": "Goal & Intent Tracking",
+      "mem_relevance": 1.0,
+      "base_relevance": 1.0,
+      "relevance_delta": 0.0,
+      "mem_context_util": 1.0,
+      "mem_hit_rate": 0.333,
+      "mem_tokens_avg": 337.7,
+      "base_tokens_avg": 460.7,
+      "token_efficiency": 2.9615
+    },
+    {
+      "conv_id": "conv_10",
+      "name": "Mixed Context Synthesis",
+      "mem_relevance": 0.889,
+      "base_relevance": 0.889,
+      "relevance_delta": 0.0,
+      "mem_context_util": 1.0,
+      "mem_hit_rate": 0.333,
+      "mem_tokens_avg": 415.3,
+      "base_tokens_avg": 208.3,
+      "token_efficiency": 2.1404
+    }
+  ]
+}
