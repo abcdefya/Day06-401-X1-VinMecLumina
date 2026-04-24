@@ -1,0 +1,6 @@
+{
+  "memory_agent_total_tokens": 10940,
+  "baseline_agent_total_tokens": 9803,
+  "token_overhead_pct": 11.6,
+  "avg_memory_hit_rate_across_convs": 0.3
+}
